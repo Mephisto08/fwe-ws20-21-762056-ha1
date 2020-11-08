@@ -1,7 +1,6 @@
-import { createConnection, Connection, Repository, getRepository } from 'typeorm';
+import {createConnection} from 'typeorm';
 
 export const dbConnection = async () => {
-
   createConnection({
     host: 'mariadb',
     type: 'mysql',
@@ -10,8 +9,8 @@ export const dbConnection = async () => {
     database: process.env.MYSQL_DATABASE,
     synchronize: true,
     logging: false,
-    entities: ["./data/Entities/*.ts"],
-  }).then(connection => {
-    console.log("DB Connected")
-  }).catch(error => console.log("No Connection"));
+    entities: ['./data/Entities/*.ts'],
+  }).then(() => {
+    console.log('DB Connected');
+  }).catch(() => console.log('No Connection'));
 }

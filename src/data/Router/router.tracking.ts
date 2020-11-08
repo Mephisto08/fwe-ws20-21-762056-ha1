@@ -7,15 +7,15 @@ import {
   UpdateTrackingById,
 } from '../Controller/controller.tracking';
 
-export const transactionRouter = Router({mergeParams: true});
+export const trackingRouter = Router({mergeParams: true});
 
-transactionRouter.get('/', getAllTrackings);
+trackingRouter.get('/', getAllTrackings);
 
-transactionRouter.post('/', getTrackingById);
+trackingRouter.post('/', getTrackingById);
 
-transactionRouter.get('/:transactionId', createTracking);
+trackingRouter.get('/:trackingId', createTracking);
 
-transactionRouter.delete('/:transactionId', UpdateTrackingById);
+trackingRouter.delete('/:trackingId', UpdateTrackingById);
 
-transactionRouter.patch('/:transactionId', deleteTrackingById);
+trackingRouter.patch('/:trackingId', deleteTrackingById);
 

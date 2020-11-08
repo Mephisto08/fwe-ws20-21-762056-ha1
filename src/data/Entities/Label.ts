@@ -6,7 +6,7 @@ export class Label{
     @PrimaryGeneratedColumn()
     labelid: number;
 
-    @Column({nullable:false})
+    @Column()
     name: string;
     
     @CreateDateColumn ()

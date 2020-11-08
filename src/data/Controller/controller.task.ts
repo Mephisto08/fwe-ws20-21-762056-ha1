@@ -7,7 +7,7 @@ export const getAllTasks = async (req, res) => {
   res.send({data: tasks});
 };
 
-export const getTaskByID = async (req, res) => {
+export const getTaskById = async (req, res) => {
   const taskId = req.params.taskId;
   const taskRepository = getRepository(Task);
 
@@ -23,7 +23,7 @@ export const getTaskByID = async (req, res) => {
   }
 };
 
-export const deleteTaksByID = async (req, res) => {
+export const deleteTaksById = async (req, res) => {
   const taskId = req.params.taskId;
   const taskRepository = getRepository(Task);
 
@@ -74,3 +74,8 @@ export const createTask = async (req, res) => {
     data: createdTask,
   });
 };
+
+/*
+export const addLabel = async (req, res) =>{
+  const {id} = req.body;
+}*/

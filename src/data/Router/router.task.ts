@@ -1,9 +1,9 @@
 import {Router} from 'express';
 import {
   createTask,
-  deleteTaksByID,
+  deleteTaksById,
   getAllTasks,
-  getTaskByID,
+  getTaskById,
   UpdateTaskById,
 } from '../Controller/controller.task';
 
@@ -13,8 +13,10 @@ taskRouter.get('/', getAllTasks);
 
 taskRouter.post('/', createTask);
 
-taskRouter.get('/:taskId', getTaskByID);
+taskRouter.get('/:taskId', getTaskById);
 
-taskRouter.delete('/:taskId', deleteTaksByID);
+taskRouter.delete('/:taskId', deleteTaksById);
 
 taskRouter.patch('/:taskId', UpdateTaskById);
+
+// taskRouter.post('/:taskId/label', addLabels);

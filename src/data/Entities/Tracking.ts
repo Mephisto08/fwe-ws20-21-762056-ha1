@@ -5,13 +5,13 @@ export class Tracking{
     @PrimaryGeneratedColumn()
     trackingid: number;
 
-    @Column({nullable:false})
+    @Column()
     name: string;
 
-    @Column({type:"time"})
+    @Column({type:"time", nullable:true})
     timestart: string;
 
-    @Column({type:"time"})
+    @Column({type:"time", nullable:true})
     timeend: string;
     
     @CreateDateColumn()
