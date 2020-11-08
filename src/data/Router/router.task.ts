@@ -8,6 +8,7 @@ import {
   updateTaskById,
 } from '../Controller/controller.task';
 
+// eslint-disable-next-line new-cap
 export const taskRouter = Router({mergeParams: true});
 
 taskRouter.get('/', getAllTasks);

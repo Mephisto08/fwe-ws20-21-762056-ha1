@@ -7,6 +7,7 @@ import {
   UpdateTrackingById,
 } from '../Controller/controller.tracking';
 
+// eslint-disable-next-line new-cap
 export const trackingRouter = Router({mergeParams: true});
 
 trackingRouter.get('/', getAllTrackings);

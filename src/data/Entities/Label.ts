@@ -7,20 +7,31 @@ import {
   UpdateDateColumn} from 'typeorm';
 import {Task} from './Task';
 
+// eslint-disable-next-line new-cap
 @Entity()
+/**
+ * Class Label
+ */
 export class Label {
-    @PrimaryGeneratedColumn ()
+  /**
+   * Auto Increment
+   */
+    // eslint-disable-next-line new-cap
+    @PrimaryGeneratedColumn()
     labelid: number;
 
+    // eslint-disable-next-line new-cap
     @Column()
     name: string;
-    
-    @CreateDateColumn ()
+    // eslint-disable-next-line new-cap
+    @CreateDateColumn()
     createdAt: string;
 
-    @UpdateDateColumn ()
+    // eslint-disable-next-line new-cap
+    @UpdateDateColumn()
     updatedAt: string;
 
-    @ManyToMany(() => Task, task => task.labels)
+    // eslint-disable-next-line new-cap
+    @ManyToMany(() => Task, (task) => task.labels)
     tasks: Task[];
 }

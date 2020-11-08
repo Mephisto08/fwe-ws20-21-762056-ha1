@@ -7,6 +7,7 @@ import {
   UpdateLabelById,
 } from '../Controller/controller.label';
 
+// eslint-disable-next-line new-cap
 export const labelRouter = Router({mergeParams: true});
 
 labelRouter.get('/', getAllLabels);

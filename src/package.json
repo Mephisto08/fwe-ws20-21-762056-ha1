@@ -13,7 +13,7 @@
   "author": {
     "name":"Niklas Werner",
     "email": "niklas.a.j.werner@stud.h-da.de"
-  }
+  },
   "license": "MIT",
   "dependencies": {
     "body-parser": "1.19.0",
@@ -31,8 +31,5 @@
   "devDependencies": {
     "@types/express": "^4.17.6",
     "nodemon": "2.0.4"
-  },
-  "recommendations": [
-    "dbaeumer.vscode-eslint"
-  ]
+  }
 }
