@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import {
-  // addLabels,
+  addLabelsByTaskId,
+  deleteLabelsByTaskId,
   createTask,
   deleteTaskById,
   getAllTasks,
@@ -13,6 +14,8 @@ export const taskRouter = Router({mergeParams: true});
 
 taskRouter.delete('/:taskId', deleteTaskById);
 
+taskRouter.delete('/label/:taskId', deleteLabelsByTaskId);
+
 taskRouter.get('/', getAllTasks);
 
 taskRouter.get('/:taskId', getTaskById);
@@ -21,5 +24,5 @@ taskRouter.patch('/:taskId', updateTaskById);
 
 taskRouter.post('/', createTask);
 
-// taskRouter.post('/label/:taskId', addLabels);
+taskRouter.post('/label/:taskId', addLabelsByTaskId);
 

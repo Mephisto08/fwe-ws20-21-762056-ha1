@@ -40,5 +40,5 @@ export class Task {
     @ManyToMany(() => Label, (label) => label.tasks)
     // eslint-disable-next-line new-cap
     @JoinTable()
-    labels: Label[];
+    labels: Promise<Label[]>;
 }

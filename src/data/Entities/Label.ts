@@ -34,5 +34,5 @@ export class Label {
 
     // eslint-disable-next-line new-cap
     @ManyToMany(() => Task, (task) => task.labels)
-    tasks: Task[];
+    tasks: Promise<Task[]>;
 }
