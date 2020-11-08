@@ -1,10 +1,11 @@
 import {Router} from 'express';
 import {
+  addLabels,
   createTask,
-  deleteTaksById,
+  deleteTaskById,
   getAllTasks,
   getTaskById,
-  UpdateTaskById,
+  updateTaskById,
 } from '../Controller/controller.task';
 
 export const taskRouter = Router({mergeParams: true});
@@ -15,8 +16,9 @@ taskRouter.post('/', createTask);
 
 taskRouter.get('/:taskId', getTaskById);
 
-taskRouter.delete('/:taskId', deleteTaksById);
+taskRouter.delete('/:taskId', deleteTaskById);
 
-taskRouter.patch('/:taskId', UpdateTaskById);
+taskRouter.patch('/:taskId', updateTaskById);
 
-// taskRouter.post('/:taskId/label', addLabels);
+taskRouter.post('/label/:taskId', addLabels);
+

@@ -11,11 +11,10 @@ export const trackingRouter = Router({mergeParams: true});
 
 trackingRouter.get('/', getAllTrackings);
 
-trackingRouter.post('/', getTrackingById);
+trackingRouter.post('/', createTracking);
 
-trackingRouter.get('/:trackingId', createTracking);
+trackingRouter.get('/:trackingId', getTrackingById);
 
-trackingRouter.delete('/:trackingId', UpdateTrackingById);
+trackingRouter.delete('/:trackingId', deleteTrackingById);
 
-trackingRouter.patch('/:trackingId', deleteTrackingById);
-
+trackingRouter.patch('/:trackingId', UpdateTrackingById);

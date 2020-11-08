@@ -1,4 +1,5 @@
 import {getRepository} from 'typeorm';
+import {Label} from '../Entities/Label';
 import {Task} from '../Entities/Task';
 
 export const getAllTasks = async (req, res) => {
@@ -23,7 +24,7 @@ export const getTaskById = async (req, res) => {
   }
 };
 
-export const deleteTaksById = async (req, res) => {
+export const deleteTaskById = async (req, res) => {
   const taskId = req.params.taskId;
   const taskRepository = getRepository(Task);
 
@@ -38,7 +39,7 @@ export const deleteTaksById = async (req, res) => {
   }
 };
 
-export const UpdateTaskById = async (req, res) => {
+export const updateTaskById = async (req, res) => {
   const taskId = req.params.taskId;
   const {name, description} = req.body;
   const taskRepository = getRepository(Task);
@@ -75,7 +76,36 @@ export const createTask = async (req, res) => {
   });
 };
 
-/*
-export const addLabel = async (req, res) =>{
-  const {id} = req.body;
-}*/
+
+export const addLabels = async (req, res) =>{
+  const taskId = req.params.taskId;
+  const {labelList} = req.body;
+  const taskRepo =getRepository(Task);
+
+  try {
+    const task = await taskRepo.findOneOrFail(taskId);
+    const labelRepo = getRepository(Label);
+
+    for (let i = 0; i < Object.keys(labelList).length; ++i) {
+      const labelId: number = labelList[i];
+      console.log(labelId + ' Test1');
+      try {
+        console.log(labelId + ' Test2');
+        let label = await labelRepo.findOneOrFail(labelId);
+        console.log('blabla  ' + label.name);
+        console.log(labelId + ' Test3');
+        task.labels.push(label);
+        console.log(label);
+        label = await labelRepo.save(label);
+      } catch (error) {
+        res.status(404).send({
+          status: 'not_found' + labelId + 'label',
+        });
+      }
+    }
+  } catch (error) {
+    res.status(404).send({
+      status: 'not_found' + taskId + 'task',
+    });
+  }
+};

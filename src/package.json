@@ -10,7 +10,10 @@
     "FWE",
     "HA_1"
   ],
-  "author": "Niklas Werner",
+  "author": {
+    "name":"Niklas Werner",
+    "email": "niklas.a.j.werner@stud.h-da.de"
+  }
   "license": "MIT",
   "dependencies": {
     "body-parser": "1.19.0",

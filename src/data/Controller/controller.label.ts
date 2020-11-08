@@ -2,7 +2,7 @@ import {getRepository} from 'typeorm';
 import {Label} from '../Entities/Label';
 
 export const getAllLabels = async (req, res) => {
-  const labelRepository = await getRepository(Label);
+  const labelRepository = getRepository(Label);
   const labels = await labelRepository.find();
   res.send({data: labels});
 };
@@ -33,7 +33,7 @@ export const deleteLabelById = async (req, res) => {
     res.send({});
   } catch (error) {
     res.status(404).send({
-      status: 'not_found',
+      status: 'not_found' + error,
     });
   }
 };
@@ -41,7 +41,7 @@ export const deleteLabelById = async (req, res) => {
 export const UpdateLabelById = async (req, res) => {
   const labelId = req.params.labelId;
   const name = req.body;
-  const labelRepository = getRepository(Label);
+  const labelRepository = await getRepository(Label);
 
   try {
     let label = await labelRepository.findOneOrFail(labelId);
@@ -60,7 +60,7 @@ export const UpdateLabelById = async (req, res) => {
 };
 
 export const createLabel = async (req, res) => {
-  const name = req.body;
+  const {name} = req.body;
 
   const label = new Label();
   label.name = name;

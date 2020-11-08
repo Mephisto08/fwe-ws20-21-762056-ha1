@@ -13,4 +13,4 @@ export const dbConnection = async () => {
   }).then(() => {
     console.log('DB Connected');
   }).catch(() => console.log('No Connection'));
-}
+};

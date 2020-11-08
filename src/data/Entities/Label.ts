@@ -1,9 +1,15 @@
-import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn} from 'typeorm';
 import {Task} from './Task';
 
 @Entity()
-export class Label{
-    @PrimaryGeneratedColumn()
+export class Label {
+    @PrimaryGeneratedColumn ()
     labelid: number;
 
     @Column()
@@ -15,7 +21,6 @@ export class Label{
     @UpdateDateColumn ()
     updatedAt: string;
 
-    @ManyToMany(() => Task)
-    @JoinTable ()
+    @ManyToMany(() => Task, task => task.labels)
     tasks: Task[];
 }
