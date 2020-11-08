@@ -3,7 +3,6 @@ import {labelRouter} from './router.label';
 import {taskRouter} from './router.task';
 import {trackingRouter} from './router.tracking';
 
-
 // eslint-disable-next-line new-cap
 export const globalRouter = Router({mergeParams: true});
 

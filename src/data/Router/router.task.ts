@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import {
-  addLabels,
+  // addLabels,
   createTask,
   deleteTaskById,
   getAllTasks,
@@ -11,15 +11,15 @@ import {
 // eslint-disable-next-line new-cap
 export const taskRouter = Router({mergeParams: true});
 
-taskRouter.get('/', getAllTasks);
+taskRouter.delete('/:taskId', deleteTaskById);
 
-taskRouter.post('/', createTask);
+taskRouter.get('/', getAllTasks);
 
 taskRouter.get('/:taskId', getTaskById);
 
-taskRouter.delete('/:taskId', deleteTaskById);
-
 taskRouter.patch('/:taskId', updateTaskById);
 
-taskRouter.post('/label/:taskId', addLabels);
+taskRouter.post('/', createTask);
+
+// taskRouter.post('/label/:taskId', addLabels);
 

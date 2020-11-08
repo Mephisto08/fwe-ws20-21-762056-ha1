@@ -18,7 +18,7 @@ export class Task {
    */
     // eslint-disable-next-line new-cap
     @PrimaryGeneratedColumn()
-    taskid: number;
+    taskId: number;
 
     // eslint-disable-next-line new-cap
     @Column()
@@ -30,11 +30,11 @@ export class Task {
 
     // eslint-disable-next-line new-cap
     @CreateDateColumn()
-    createdAt: string;
+    created: string;
 
     // eslint-disable-next-line new-cap
     @UpdateDateColumn()
-    updatedAt: string;
+    updated: string;
 
     // eslint-disable-next-line new-cap
     @ManyToMany(() => Label, (label) => label.tasks)

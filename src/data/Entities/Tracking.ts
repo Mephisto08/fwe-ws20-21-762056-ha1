@@ -15,25 +15,25 @@ export class Tracking {
    */
     // eslint-disable-next-line new-cap
     @PrimaryGeneratedColumn()
-    trackingid: number;
+    trackingId: number;
 
     // eslint-disable-next-line new-cap
     @Column()
     name: string;
 
     // eslint-disable-next-line new-cap
-    @Column({type: 'time', nullable: true})
-    timestart: string;
-
-    // eslint-disable-next-line new-cap
-    @Column({type: 'time', nullable: true})
-    timeend: string;
-
-    // eslint-disable-next-line new-cap
     @CreateDateColumn()
-    createdAt: string;
+    created: string;
 
     // eslint-disable-next-line new-cap
     @UpdateDateColumn()
-    updatedAt: string;
+    updatet: string;
+
+    // eslint-disable-next-line new-cap
+    @Column({type: 'time', nullable: true})
+    timeStart: string;
+
+    // eslint-disable-next-line new-cap
+    @Column({type: 'time', nullable: true})
+    timeEnd: string;
 }

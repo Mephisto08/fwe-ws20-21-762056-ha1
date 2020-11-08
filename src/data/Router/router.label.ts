@@ -4,20 +4,20 @@ import {
   deleteLabelById,
   getAllLabels,
   getLabelById,
-  UpdateLabelById,
+  updateLabelById,
 } from '../Controller/controller.label';
 
 // eslint-disable-next-line new-cap
 export const labelRouter = Router({mergeParams: true});
 
-labelRouter.get('/', getAllLabels);
+labelRouter.delete('/:labelId', deleteLabelById);
 
-labelRouter.post('/', createLabel);
+labelRouter.get('/', getAllLabels);
 
 labelRouter.get('/:labelId', getLabelById);
 
-labelRouter.delete('/:labelId', deleteLabelById);
+labelRouter.patch('/:labelId', updateLabelById);
 
-labelRouter.patch('/:labelId', UpdateLabelById);
+labelRouter.post('/', createLabel);
 
 

@@ -4,18 +4,18 @@ import {
   deleteTrackingById,
   getAllTrackings,
   getTrackingById,
-  UpdateTrackingById,
+  updateTrackingById,
 } from '../Controller/controller.tracking';
 
 // eslint-disable-next-line new-cap
 export const trackingRouter = Router({mergeParams: true});
 
-trackingRouter.get('/', getAllTrackings);
+trackingRouter.delete('/:trackingId', deleteTrackingById);
 
-trackingRouter.post('/', createTracking);
+trackingRouter.get('/', getAllTrackings);
 
 trackingRouter.get('/:trackingId', getTrackingById);
 
-trackingRouter.delete('/:trackingId', deleteTrackingById);
+trackingRouter.patch('/:trackingId', updateTrackingById);
 
-trackingRouter.patch('/:trackingId', UpdateTrackingById);
+trackingRouter.post('/', createTracking);

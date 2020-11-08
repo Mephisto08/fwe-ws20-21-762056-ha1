@@ -1,6 +1,36 @@
 import {getRepository} from 'typeorm';
-import {Label} from '../Entities/Label';
+// import {Label} from '../Entities/Label';
 import {Task} from '../Entities/Task';
+
+export const createTask = async (req, res) => {
+  const {name, description} = req.body;
+
+  const task = new Task();
+  task.name = name;
+  task.description = description;
+
+  const taskRepository = getRepository(Task);
+  const createdTask = await taskRepository.save(task);
+
+  res.send({
+    data: createdTask,
+  });
+};
+
+export const deleteTaskById = async (req, res) => {
+  const taskId = req.params.taskId;
+  const taskRepository = getRepository(Task);
+
+  try {
+    const task = await taskRepository.findOneOrFail(taskId);
+    await taskRepository.remove(task);
+    res.send({});
+  } catch (error) {
+    res.status(404).send({
+      status: 'Error: ' + error,
+    });
+  }
+};
 
 export const getAllTasks = async (req, res) => {
   const taskRepository = getRepository(Task);
@@ -19,22 +49,7 @@ export const getTaskById = async (req, res) => {
     });
   } catch (error) {
     res.status(404).send({
-      status: 'not_found',
-    });
-  }
-};
-
-export const deleteTaskById = async (req, res) => {
-  const taskId = req.params.taskId;
-  const taskRepository = getRepository(Task);
-
-  try {
-    const task = await taskRepository.findOneOrFail(taskId);
-    await taskRepository.remove(task);
-    res.send({});
-  } catch (error) {
-    res.status(404).send({
-      status: 'not_found',
+      status: 'Error: ' + error,
     });
   }
 };
@@ -56,27 +71,12 @@ export const updateTaskById = async (req, res) => {
     });
   } catch (error) {
     res.status(404).send({
-      status: 'not_found',
+      status: 'Error: ' + error,
     });
   }
 };
 
-export const createTask = async (req, res) => {
-  const {name, description} = req.body;
-
-  const task = new Task();
-  task.name = name;
-  task.description = description;
-
-  const taskRepository = getRepository(Task);
-  const createdTask = await taskRepository.save(task);
-
-  res.send({
-    data: createdTask,
-  });
-};
-
-
+/*
 export const addLabels = async (req, res) =>{
   const taskId = req.params.taskId;
   const {labelList} = req.body;
@@ -99,13 +99,14 @@ export const addLabels = async (req, res) =>{
         label = await labelRepo.save(label);
       } catch (error) {
         res.status(404).send({
-          status: 'not_found' + labelId + 'label',
+          status: 'Error: ' + error + labelId + 'label',
         });
       }
     }
   } catch (error) {
     res.status(404).send({
-      status: 'not_found' + taskId + 'task',
+      status: 'Error: ' + error + taskId + 'task',
     });
   }
 };
+*/
