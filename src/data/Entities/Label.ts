@@ -1,5 +1,5 @@
 import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
-import {Task} from './Task'
+import {Task} from './Task';
 
 @Entity()
 export class Label{
@@ -9,13 +9,13 @@ export class Label{
     @Column({nullable:false})
     name: string;
     
-    @CreateDateColumn()
+    @CreateDateColumn ()
     createdAt: string;
 
-    @UpdateDateColumn()
+    @UpdateDateColumn ()
     updatedAt: string;
 
     @ManyToMany(() => Task)
-    @JoinTable()
+    @JoinTable ()
     tasks: Task[];
 }
