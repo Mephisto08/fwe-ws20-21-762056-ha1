@@ -10,13 +10,13 @@ export const addLabelsByTaskId = async (req, res) =>{
 
   try {
     const task = await taskRepo.findOneOrFail(taskId);
-    const taskLabels = await task.labels;
+    const taskLabelsList = await task.labels;
     const labelRepo = getRepository(Label);
 
     for (let i = 0; i < Object.keys(labelList).length; ++i) {
       const labelId: NewType = labelList[i];
       const label = await labelRepo.findOneOrFail(labelId);
-      taskLabels.push(label);
+      taskLabelsList.push(label);
       await taskRepo.save(task);
     }
     res.send({
@@ -51,12 +51,12 @@ export const deleteLabelsByTaskId = async (req, res) =>{
 
   try {
     const task = await taskRepo.findOneOrFail(taskId);
-    let taskLabels = await task.labels;
+    let taskLabelsList = await task.labels;
 
-    taskLabels = taskLabels.filter((label) =>
+    taskLabelsList = taskLabelsList.filter((label) =>
       !labelList.includes(label.labelId));
 
-    task.labels = Promise.resolve(taskLabels);
+    task.labels = Promise.resolve(taskLabelsList);
 
     await taskRepo.save(task);
     res.send({
@@ -127,7 +127,3 @@ export const updateTaskById = async (req, res) => {
     });
   }
 };
-
-
-
-

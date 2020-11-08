@@ -11,6 +11,6 @@ export const dbConnection = async () => {
     logging: false,
     entities: ['./data/Entities/*.ts'],
   }).then(() => {
-    console.log('DB Connected');
+    console.log('DataBase Successfully Connected');
   }).catch(() => console.log('No Connection'));
 };

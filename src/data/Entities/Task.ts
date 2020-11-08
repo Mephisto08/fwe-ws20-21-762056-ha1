@@ -4,8 +4,12 @@ import {Column,
   PrimaryGeneratedColumn,
   JoinTable,
   ManyToMany,
-  UpdateDateColumn} from 'typeorm';
+  UpdateDateColumn,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import {Label} from './Label';
+import {Tracking} from './Tracking';
 
 // eslint-disable-next-line new-cap
 @Entity()
@@ -41,4 +45,10 @@ export class Task {
     // eslint-disable-next-line new-cap
     @JoinTable()
     labels: Promise<Label[]>;
+
+    // eslint-disable-next-line new-cap
+    @ManyToOne(() => Tracking)
+    // eslint-disable-next-line new-cap
+    @JoinTable()
+    trackings: Promise<Tracking[]>;
 }
