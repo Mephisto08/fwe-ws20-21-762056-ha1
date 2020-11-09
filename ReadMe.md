@@ -12,4 +12,5 @@ Dies ist das Backend für die erste Hausaufgabe.
 **Hinweis:**  Es kann die .env_example zu .env umbenannt werden. Dies reicht aus, damit die Datenbank korrekt starten kann.
 
 - Der Docker-Container wird mit folgendem Befehl gestartet:
-docker-compose up
+
+**docker-compose up**
