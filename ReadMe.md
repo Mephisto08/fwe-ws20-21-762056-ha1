@@ -13,4 +13,4 @@ Dies ist das Backend für die erste Hausaufgabe.
 
 - Der Docker-Container wird mit folgendem Befehl gestartet:
 
-**docker-compose up**
+		docker-compose up
