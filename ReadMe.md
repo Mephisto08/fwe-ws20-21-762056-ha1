@@ -27,7 +27,7 @@ Dies ist das Backend für die erste Hausaufgabe.
 
 			{  "name":"Task Besispiel",
 			   "description":  "Beschreibung Beispiel" }
-- Task erzeugen:
+- Task löschen:
 	- **delete** - Request
 	- http://localhost:3000/api/task/:taskId
 	-  Es muss die TaskId übergeben werden, die gelöscht werden soll.
