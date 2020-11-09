@@ -1,4 +1,4 @@
-## **Fortgeschrittene Webentwicklung**
+# **Fortgeschrittene Webentwicklung**
 Dies ist das Backend für die erste Hausaufgabe.
 
 ## Setup
@@ -14,3 +14,13 @@ Dies ist das Backend für die erste Hausaufgabe.
 - Der Docker-Container wird mit folgendem Befehl gestartet:
 
 		docker-compose up
+
+## Routen
+- Unter **localhost:3000/api** ist die Anwendung erreichbar.
+
+###	Task:
+
+- Task erzeugen:
+	- **post** - Request
+	- http://localhost:3000/api/task
+	- Im 
