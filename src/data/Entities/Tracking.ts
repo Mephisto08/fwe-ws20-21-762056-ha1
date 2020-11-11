@@ -1,7 +1,7 @@
 import {Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn} from 'typeorm';
 import {Task} from './Task';
@@ -17,7 +17,7 @@ export class Tracking {
    */
     // eslint-disable-next-line new-cap
     @PrimaryGeneratedColumn()
-    trackingId: number;
+    id: number;
 
     // eslint-disable-next-line new-cap
     @Column()
@@ -40,6 +40,6 @@ export class Tracking {
     timeEnd: string;
 
     // eslint-disable-next-line new-cap
-    @OneToMany(() => Task, (task) => task.trackings)
+    @ManyToOne(() => Task, (task) => task.trackings)
     task: Task;
 }

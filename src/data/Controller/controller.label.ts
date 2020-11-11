@@ -2,22 +2,28 @@ import {getRepository} from 'typeorm';
 import {Label} from '../Entities/Label';
 
 export const createLabel = async (req, res) => {
-  try {
-    const {name} = req.body;
+  const {name} = req.body;
 
-    const label = new Label();
-    label.name = name;
-
-    const labelRepository = getRepository(Label);
-    const createdlabel = await labelRepository.save(label);
-
-    res.send({
-      data: createdlabel,
+  if (name === undefined) {
+    res.status(400).send({
+      status: 'Error: Not all parameters were set.',
     });
-  } catch (error) {
-    res.status(404).send({
-      status: 'Error: ' + error,
-    });
+  } else {
+    try {
+      const label = new Label();
+      label.name = name;
+
+      const labelRepository = getRepository(Label);
+      const createdlabel = await labelRepository.save(label);
+
+      res.status(200).send({
+        data: createdlabel,
+      });
+    } catch (error) {
+      res.status(404).send({
+        status: 'Error: ' + error,
+      });
+    }
   }
 };
 
@@ -28,7 +34,7 @@ export const deleteLabelById = async (req, res) => {
   try {
     const label = await labelRepository.findOneOrFail(labelId);
     await labelRepository.remove(label);
-    res.send({});
+    res.status(200).send({});
   } catch (error) {
     res.status(404).send({
       status: 'Error: ' + error,
@@ -42,13 +48,27 @@ export const getAllLabels = async (req, res) => {
   res.send({data: labels});
 };
 
+export const getAllTasksByLabelId = async (req, res) => {
+  const labelId = req.params.labelId;
+  const labelRepo = getRepository(Label);
+  try {
+    const label = await labelRepo.findOneOrFail(labelId);
+    const labelTaskList = await label.tasks;
+    res.status(200).send({data: labelTaskList});
+  } catch (error) {
+    res.status(404).send({
+      status: 'Error: ' + error,
+    });
+  }
+};
+
 export const getLabelById = async (req, res) => {
   const labelId = req.params.labelId;
   const labelRepository = getRepository(Label);
 
   try {
     const label = await labelRepository.findOneOrFail(labelId);
-    res.send({
+    res.status(200).send({
       data: label,
     });
   } catch (error) {
@@ -69,7 +89,7 @@ export const updateLabelById = async (req, res) => {
 
     label = await labelRepository.save(label);
 
-    res.send({
+    res.status(200).send({
       data: label,
     });
   } catch (error) {

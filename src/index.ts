@@ -15,11 +15,11 @@ export const server = async () => {
 
 
     app.get('/', (req, res) => {
-      res.send('Hello FWE students!');
+      res.send('Hallo das ist dein Timetracker! Nutzen Sie "http://localhost:3000/api" um in die Anwendung zukommen.');
     });
 
     app.listen(port, () => {
-      console.log(`[Express]: Listening at http://localhost:${port}`);
+      console.log(`http://localhost:${port}`);
     });
   } catch (e) {
     console.log(e);

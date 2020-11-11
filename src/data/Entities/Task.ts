@@ -6,7 +6,6 @@ import {Column,
   ManyToMany,
   UpdateDateColumn,
   OneToMany,
-  ManyToOne,
 } from 'typeorm';
 import {Label} from './Label';
 import {Tracking} from './Tracking';
@@ -22,7 +21,7 @@ export class Task {
    */
     // eslint-disable-next-line new-cap
     @PrimaryGeneratedColumn()
-    taskId: number;
+    id: number;
 
     // eslint-disable-next-line new-cap
     @Column()
@@ -47,7 +46,7 @@ export class Task {
     labels: Promise<Label[]>;
 
     // eslint-disable-next-line new-cap
-    @ManyToOne(() => Tracking)
+    @OneToMany(() => Tracking, (tracking) => tracking.task, {nullable: true})
     // eslint-disable-next-line new-cap
     @JoinTable()
     trackings: Promise<Tracking[]>;

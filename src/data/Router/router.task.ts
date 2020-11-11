@@ -1,11 +1,13 @@
 import {Router} from 'express';
 import {
   addLabelsByTaskId,
-  deleteLabelsByTaskId,
   createTask,
+  deleteLabelsByTaskId,
   deleteTaskById,
   getAllTasks,
+  getAllTrackingsByTaskId,
   getTaskById,
+  getAllLabesByTaskId,
   updateTaskById,
 } from '../Controller/controller.task';
 
@@ -19,6 +21,10 @@ taskRouter.delete('/label/:taskId', deleteLabelsByTaskId);
 taskRouter.get('/', getAllTasks);
 
 taskRouter.get('/:taskId', getTaskById);
+
+taskRouter.get('/label/:taskId', getAllLabesByTaskId);
+
+taskRouter.get('/tracking/:taskId', getAllTrackingsByTaskId);
 
 taskRouter.patch('/:taskId', updateTaskById);
 

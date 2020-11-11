@@ -18,7 +18,7 @@ export class Label {
    */
     // eslint-disable-next-line new-cap
     @PrimaryGeneratedColumn()
-    labelId: number;
+    id: number;
 
     // eslint-disable-next-line new-cap
     @Column()

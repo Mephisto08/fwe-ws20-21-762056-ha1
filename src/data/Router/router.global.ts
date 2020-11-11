@@ -7,7 +7,8 @@ import {trackingRouter} from './router.tracking';
 export const globalRouter = Router({mergeParams: true});
 
 globalRouter.get('/', async (_: Request, res: Response) => {
-  res.send({message: 'Hello api'});
+  res.send('Hallo! Sie sind nun in der Anwendung.' +
+  'Von hier aus können Sie alles verwalten!');
 });
 
 globalRouter.use('/task', taskRouter);

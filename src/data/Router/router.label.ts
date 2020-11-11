@@ -3,6 +3,7 @@ import {
   createLabel,
   deleteLabelById,
   getAllLabels,
+  getAllTasksByLabelId,
   getLabelById,
   updateLabelById,
 } from '../Controller/controller.label';
@@ -15,6 +16,8 @@ labelRouter.delete('/:labelId', deleteLabelById);
 labelRouter.get('/', getAllLabels);
 
 labelRouter.get('/:labelId', getLabelById);
+
+labelRouter.get('/task/:labelId', getAllTasksByLabelId);
 
 labelRouter.patch('/:labelId', updateLabelById);
 

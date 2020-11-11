@@ -1,18 +1,37 @@
 import {getRepository} from 'typeorm';
+import {Task} from '../Entities/Task';
 import {Tracking} from '../Entities/Tracking';
 
 export const createTracking = async (req, res) => {
   const {name} = req.body;
+  const {task} = req.body;
 
   const tracking = new Tracking();
-  tracking.name = name;
+  const taskRepo = getRepository(Task);
 
-  const trackingRepository = await getRepository(Tracking);
-  const createdTracking = await trackingRepository.save(tracking);
+  if (name === undefined || task === undefined) {
+    res.status(400).send({
+      status: 'Error: Not all parameters were set.',
+    });
+  } else {
+    try {
+      const taske = await taskRepo.findOneOrFail(task);
 
-  res.send({
-    data: createdTracking,
-  });
+      tracking.name = name;
+      tracking.task = taske;
+
+      const trackingRepository = getRepository(Tracking);
+      const createdTracking = await trackingRepository.save(tracking);
+
+      res.status(200).send({
+        data: createdTracking,
+      });
+    } catch (error) {
+      res.status(404).send({
+        status: 'Error: ' + error,
+      });
+    }
+  }
 };
 
 export const deleteTrackingById = async (req, res) => {
@@ -22,7 +41,7 @@ export const deleteTrackingById = async (req, res) => {
   try {
     const tracking = await trackingRepository.findOneOrFail(trackingId);
     await trackingRepository.remove(tracking);
-    res.send({});
+    res.status(200).send({});
   } catch (error) {
     res.status(404).send({
       status: 'Error: ' + error,
@@ -33,7 +52,7 @@ export const deleteTrackingById = async (req, res) => {
 export const getAllTrackings = async (req, res) => {
   const trackingRepository = getRepository(Tracking);
   const trackings = await trackingRepository.find();
-  res.send({data: trackings});
+  res.status(200).send({data: trackings});
 };
 
 export const getTrackingById = async (req, res) => {
@@ -42,7 +61,7 @@ export const getTrackingById = async (req, res) => {
 
   try {
     const tracking = await trackingRepository.findOneOrFail(trackingId);
-    res.send({
+    res.status(200).send({
       data: tracking,
     });
   } catch (error) {
@@ -63,7 +82,7 @@ export const updateTrackingById = async (req, res) => {
 
     tracking = await trackingRepository.save(tracking);
 
-    res.send({
+    res.status(200).send({
       data: tracking,
     });
   } catch (error) {
