@@ -107,7 +107,8 @@ export const getAllLabesByTaskId = async (req, res) => {
 
 export const getAllTasks = async (req, res) => {
   const taskRepository = getRepository(Task);
-  const tasks = await taskRepository.find();
+  const tasks = await taskRepository.find(
+      {relations: ['trackings', 'labels']});
   res.status(200).send({data: tasks});
 };
 
@@ -130,7 +131,9 @@ export const getTaskById = async (req, res) => {
   const taskRepository = getRepository(Task);
 
   try {
-    const task = await taskRepository.findOneOrFail(taskId);
+    const task =
+    await taskRepository.findOneOrFail(taskId,
+        {relations: ['trackings', 'labels']});
     res.status(200).send({
       data: task,
     });
@@ -147,7 +150,9 @@ export const updateTaskById = async (req, res) => {
   const taskRepository = getRepository(Task);
 
   try {
-    let task = await taskRepository.findOneOrFail(taskId);
+    let task =
+    await taskRepository.findOneOrFail(taskId,
+        {relations: ['trackings', 'labels']});
     task.name = name;
     task.description = description;
 

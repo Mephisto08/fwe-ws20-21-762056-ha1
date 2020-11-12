@@ -21,7 +21,7 @@ export class Tracking {
 
     // eslint-disable-next-line new-cap
     @Column()
-    name: string;
+    description: string;
 
     // eslint-disable-next-line new-cap
     @CreateDateColumn()
@@ -32,14 +32,14 @@ export class Tracking {
     updatet: string;
 
     // eslint-disable-next-line new-cap
-    @Column({type: 'time', nullable: true})
+    @Column({type: 'time', default: 0})
     timeStart: string;
 
     // eslint-disable-next-line new-cap
-    @Column({type: 'time', nullable: true})
+    @Column({type: 'time', default: 0})
     timeEnd: string;
 
     // eslint-disable-next-line new-cap
-    @ManyToOne(() => Task, (task) => task.trackings)
+    @ManyToOne(() => Task, (task) => task.trackings, {onDelete: 'CASCADE'})
     task: Task;
 }

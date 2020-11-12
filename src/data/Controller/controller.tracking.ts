@@ -3,21 +3,22 @@ import {Task} from '../Entities/Task';
 import {Tracking} from '../Entities/Tracking';
 
 export const createTracking = async (req, res) => {
-  const {name} = req.body;
+  const {description} = req.body;
   const {task} = req.body;
 
   const tracking = new Tracking();
   const taskRepo = getRepository(Task);
 
-  if (name === undefined || task === undefined) {
+  if (description === undefined || task === undefined) {
     res.status(400).send({
       status: 'Error: Not all parameters were set.',
     });
   } else {
     try {
-      const taske = await taskRepo.findOneOrFail(task);
+      const taske =
+      await taskRepo.findOneOrFail(task, {relations: ['trackings']});
 
-      tracking.name = name;
+      tracking.description = description;
       tracking.task = taske;
 
       const trackingRepository = getRepository(Tracking);
@@ -51,8 +52,10 @@ export const deleteTrackingById = async (req, res) => {
 
 export const getAllTrackings = async (req, res) => {
   const trackingRepository = getRepository(Tracking);
-  const trackings = await trackingRepository.find();
-  res.status(200).send({data: trackings});
+  const tracking = await trackingRepository.find({relations: ['task']});
+  res.status(200).send({
+    data: tracking,
+  });
 };
 
 export const getTrackingById = async (req, res) => {
@@ -60,7 +63,8 @@ export const getTrackingById = async (req, res) => {
   const trackingRepository = getRepository(Tracking);
 
   try {
-    const tracking = await trackingRepository.findOneOrFail(trackingId);
+    const tracking =
+    await trackingRepository.findOneOrFail(trackingId, {relations: ['task']});
     res.status(200).send({
       data: tracking,
     });
@@ -73,14 +77,19 @@ export const getTrackingById = async (req, res) => {
 
 export const updateTrackingById = async (req, res) => {
   const trackingId = req.params.trackingId;
-  const {name} = req.body;
-  const trackingRepository = await getRepository(Tracking);
+  const {description} = req.body;
+  const {timeStart} = req.body;
+  const {timeEnd} = req.body;
+  const trackingRepo = getRepository(Tracking);
 
   try {
-    let tracking = await trackingRepository.findOneOrFail(trackingId);
-    tracking.name = name;
+    let tracking =
+    await trackingRepo.findOneOrFail(trackingId, {relations: ['task']});
+    tracking.description = description;
+    tracking.timeStart = timeStart;
+    tracking.timeEnd = timeEnd;
 
-    tracking = await trackingRepository.save(tracking);
+    tracking = await trackingRepo.save(tracking);
 
     res.status(200).send({
       data: tracking,

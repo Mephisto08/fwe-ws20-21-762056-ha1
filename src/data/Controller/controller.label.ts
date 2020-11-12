@@ -80,8 +80,8 @@ export const getLabelById = async (req, res) => {
 
 export const updateLabelById = async (req, res) => {
   const labelId = req.params.labelId;
-  const name = req.body;
-  const labelRepository = await getRepository(Label);
+  const {name} = req.body;
+  const labelRepository = getRepository(Label);
 
   try {
     let label = await labelRepository.findOneOrFail(labelId);
