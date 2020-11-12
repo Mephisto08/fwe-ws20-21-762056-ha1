@@ -1,4 +1,4 @@
-/* import {Helper} from '../../helper';
+import {Helper} from '../../helper';
 import request from 'supertest';
 import {Tracking} from '../../../data/Entities/Tracking';
 import {Task} from '../../../data/Entities/Task';
@@ -32,7 +32,7 @@ describe('Tests for the Tracking class', () => {
     request(helper.app)
         .post('/api/tracking')
         .send({
-          name: 'Tracking Test 4',
+          description: 'Tracking Test 4',
           task: `${taskId}`,
         })
         .set('Content-Type', 'application/json')
@@ -149,4 +149,3 @@ describe('Tests for the Tracking class', () => {
         });
   });
 });
-*/

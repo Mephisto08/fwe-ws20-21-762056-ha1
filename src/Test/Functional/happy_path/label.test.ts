@@ -1,4 +1,4 @@
-/* import {Helper} from '../../helper';
+import {Helper} from '../../helper';
 import request from 'supertest';
 import {Label} from '../../../data/Entities/Label';
 
@@ -25,7 +25,6 @@ describe('Tests for the Label class', () => {
         .post('/api/label')
         .send({
           name: 'Label Test 4',
-          description: 'Beschreibung Test 4',
         })
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
@@ -149,4 +148,3 @@ describe('Tests for the Label class', () => {
         });
   });
 });
-*/
