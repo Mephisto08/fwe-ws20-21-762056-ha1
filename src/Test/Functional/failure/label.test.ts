@@ -17,24 +17,20 @@ describe('Tests for the Label class', () => {
     await helper.shutdown();
   });
 
-  it('createLabel Test Edge', async (done) => {
+  it('createLabel Test Fail', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
 
     request(helper.app)
         .post('/api/label')
         .send({
-          name: 'Label Test 4',
+          names: 'Label Test 99',
         })
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(400)
         .end(async (err, res) => {
           if (err) throw err;
-          const [, label] =
-            await helper.getRepo(Label).findAndCount();
-          expect(label).toBe(4);
-          expect(res.body.data.name).toBe('Label Test 4');
           done();
         });
   });

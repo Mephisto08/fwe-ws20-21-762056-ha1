@@ -1,7 +1,7 @@
 import {getRepository} from 'typeorm';
 import {Label} from '../Entities/Label';
 import {Task} from '../Entities/Task';
-
+import Axios from 'axios';
 export const addLabelsByTaskId = async (req, res) =>{
   type NewType = number;
   const taskId = req.params.taskId;
@@ -167,3 +167,62 @@ export const updateTaskById = async (req, res) => {
     });
   }
 };
+
+export const sendSlackByTaskId = async (req, res) => {
+  const taskId = req.params.taskId;
+  const taskRepository = getRepository(Task);
+
+  try {
+    const task =
+    await taskRepository.findOneOrFail(taskId,
+        {relations: ['trackings', 'labels']});
+    await Axios.post(`https://hooks.slack.com/services/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`, {
+      text: `Task ${task.id}:
+             Name:         ${task.name} 
+             Beschr:       ${task.description}
+             Erzeugt:      ${task.created}
+             Update:       ${task.updated}
+             `,
+    });
+    res.status(200).send({
+      data: task,
+    });
+  } catch (error) {
+    res.status(404).send({
+      status: 'Error: ' + error,
+    });
+  }
+};
+
+
+export const sendSlackAll = async (req, res) => {
+  const taskRepository = getRepository(Task);
+
+  try {
+    const task = await taskRepository.find(
+        {relations: ['trackings', 'labels']});
+    let stri: string;
+    for (let i = 0; i < task.length; ++i) {
+      stri +=
+      `Task: ${task[i].id}:
+       Name:         ${task[i].name} 
+       Beschr:       ${task[i].description}
+       Erzeugt:      ${task[i].created}
+       Update:       ${task[i].updated}
+      `;
+    }
+    console.log(stri);
+    await Axios.post(`https://hooks.slack.com/services/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`, {
+      text: `Tasks:
+             ${stri}`,
+    });
+    res.status(200).send({
+      data: task,
+    });
+  } catch (error) {
+    res.status(404).send({
+      status: 'Error: ' + error,
+    });
+  }
+};
+

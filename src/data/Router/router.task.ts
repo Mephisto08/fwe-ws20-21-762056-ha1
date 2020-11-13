@@ -9,6 +9,8 @@ import {
   getTaskById,
   getAllLabesByTaskId,
   updateTaskById,
+  sendSlackByTaskId,
+  sendSlackAll,
 } from '../Controller/controller.task';
 
 // eslint-disable-next-line new-cap
@@ -31,4 +33,9 @@ taskRouter.patch('/:taskId', updateTaskById);
 taskRouter.post('/', createTask);
 
 taskRouter.post('/label/:taskId', addLabelsByTaskId);
+
+taskRouter.post('/slack/:taskId', sendSlackByTaskId);
+
+taskRouter.post('/slack', sendSlackAll);
+
 
