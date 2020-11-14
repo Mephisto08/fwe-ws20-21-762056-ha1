@@ -121,6 +121,31 @@ export const deleteLabelsByTaskId = async (req, res) =>{
 };
 
 /**
+ * Filtert alle Labels aus der taskLabelList heraus,
+ * die in der labelList angegeben sind
+ * @param {label[]}taskLabelsList Liste mit Labels eines bestimmten Tasks
+ * @param {any}labelList Liste mit Label-Id,
+ * die aus der oberen Liste gelöscht werden
+ * @return {label[]} Liste mit Labels.
+ * Beinhaltet nur noch die Labels die gelöscht werden sollten.
+ */
+function deletsLabelsFromLabelList(taskLabelsList: Label[], labelList: any) {
+  taskLabelsList = taskLabelsList.filter((label) =>
+    !labelList.includes(label.id));
+  return taskLabelsList;
+}
+
+/**
+ * Prüft, ob alle Parameter gesetzt werden für deleteLabelsByTaskId
+ * @param {any}taskId Id von einer Task
+ * @param {any}labelList Liste mit Id von Label
+ * @return {boolean} True, wenn alle Parameter gesetzt wurden
+ */
+function checkIfAllParamsSet(taskId: any, labelList: any) {
+  return !taskId || !labelList;
+}
+
+/**
  * Löscht einen Task. Task wird mit seiner Id selektiert.
  * Löscht auch seine dazugehörigen Trackings mit.
  * Erwartet als Parameter eine taskId.
@@ -331,28 +356,3 @@ export const updateTaskById = async (req, res) => {
     });
   }
 };
-
-/**
- * Filtert alle Labels aus der taskLabelList heraus,
- * die in der labelList angegeben sind
- * @param {label[]}taskLabelsList Liste mit Labels eines bestimmten Tasks
- * @param {any}labelList Liste mit Label-Id,
- * die aus der oberen Liste gelöscht werden
- * @return {label[]} Liste mit Labels.
- * Beinhaltet nur noch die Labels die gelöscht werden sollten.
- */
-function deletsLabelsFromLabelList(taskLabelsList: Label[], labelList: any) {
-  taskLabelsList = taskLabelsList.filter((label) => !labelList.includes(label.id));
-  return taskLabelsList;
-}
-
-/**
- * Prüft, ob alle Parameter gesetzt werden für deleteLabelsByTaskId
- * @param {any}taskId Id von einer Task
- * @param {any}labelList Liste mit Id von Label
- * @return {boolean} True, wenn alle Parameter gesetzt wurden
- */
-function checkIfAllParamsSet(taskId: any, labelList: any) {
-  return !taskId || !labelList;
-}
-
