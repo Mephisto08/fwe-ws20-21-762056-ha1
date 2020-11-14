@@ -29,7 +29,7 @@ describe('Tests for the Task class', () => {
         .expect(400)
         .end(async (err, res) => {
           if (err) throw err;
-          expect(res.body.data).toBe('Error: Parameter fehlt!');
+          expect(res.body.error).toBe('Error: Parameter fehlt!');
           done();
         });
   });
