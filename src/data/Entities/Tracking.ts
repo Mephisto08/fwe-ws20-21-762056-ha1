@@ -9,11 +9,11 @@ import {Task} from './Task';
 // eslint-disable-next-line new-cap
 @Entity()
 /**
- * Class Tracking
+ * Klasse Tracking
  */
 export class Tracking {
   /**
-   * Auto Increment
+   * Auto Inkrement
    */
     // eslint-disable-next-line new-cap
     @PrimaryGeneratedColumn()

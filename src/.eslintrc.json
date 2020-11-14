@@ -1,3 +1,6 @@
+/*
+* In dieser Datei werden die Konfigurationen für den eslint festgelegt
+*/
 {
     "root": true,
     "parser": "@typescript-eslint/parser",

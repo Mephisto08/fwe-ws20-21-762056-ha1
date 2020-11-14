@@ -10,6 +10,9 @@ import {
 // eslint-disable-next-line new-cap
 export const trackingRouter = Router({mergeParams: true});
 
+/**
+ * Folgend sind alle Routen aufgeführt, die ein tracing hat
+ */
 trackingRouter.delete('/:trackingId', deleteTrackingById);
 
 trackingRouter.get('/', getAllTrackings);

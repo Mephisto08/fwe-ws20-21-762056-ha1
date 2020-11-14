@@ -1,11 +1,13 @@
-/* eslint-disable */
+
 import express from 'express';
 import {dbConnection} from './data/DB_Connection/createDBConnection';
 import {globalRouter} from './data/Router/router.global';
 import * as bodyParser from 'body-parser';
 
-// Client-ID 499266165189-3d7j55iomns0u75pj01fookn2sraq5lr.apps.googleusercontent.com
-// Clientschlüssel yqP4c87EjmOwgM1UVtefR-PQ
+/**
+ * In dieser Funktion wird die Datenbankverbindung
+ * aufgebaut und der Server wird gestartet.
+ */
 export const server = async () => {
   try {
     const app = express();

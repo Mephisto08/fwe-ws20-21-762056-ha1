@@ -11,6 +11,9 @@ import {
 // eslint-disable-next-line new-cap
 export const labelRouter = Router({mergeParams: true});
 
+/**
+ * Folgend sind alle Routen aufgeführt, die ein Label hat
+ */
 labelRouter.delete('/:labelId', deleteLabelById);
 
 labelRouter.get('/', getAllLabels);

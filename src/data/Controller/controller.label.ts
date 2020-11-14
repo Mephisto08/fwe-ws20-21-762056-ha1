@@ -1,6 +1,13 @@
 import {getRepository} from 'typeorm';
 import {Label} from '../Entities/Label';
 
+/**
+ * Erstellt ein Label.
+ * Erwartet als Parameter nichts.
+ * Erwartet im Body einen name.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const createLabel = async (req, res) => {
   const {name} = req.body;
 
@@ -27,6 +34,13 @@ export const createLabel = async (req, res) => {
   }
 };
 
+/**
+ * Löscht ein Label. Label wird mit seiner Id selektiert.
+ * Erwartet als Parameter eine labelId.
+ * Erwartet im Body nichts.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const deleteLabelById = async (req, res) => {
   const labelId = req.params.labelId;
   const labelRepository = getRepository(Label);
@@ -42,12 +56,32 @@ export const deleteLabelById = async (req, res) => {
   }
 };
 
+/**
+ * Gibt alle Labels zurück.
+ * Erwartet als Parameter nichts.
+ * Erwartet im Body nichts.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const getAllLabels = async (req, res) => {
   const labelRepository = getRepository(Label);
-  const labels = await labelRepository.find();
-  res.send({data: labels});
+  try {
+    const labels = await labelRepository.find();
+    res.send({data: labels});
+  } catch (error) {
+    res.status(404).send({
+      status: 'Error: ' + error,
+    });
+  }
 };
 
+/**
+ * Gibt alle Task eines Labels wieder. Label wird anhand seiner Id selektiert.
+ * Erwartet als Parameter eine labelId.
+ * Erwartet im Body nichts.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const getAllTasksByLabelId = async (req, res) => {
   const labelId = req.params.labelId;
   const labelRepo = getRepository(Label);
@@ -62,6 +96,13 @@ export const getAllTasksByLabelId = async (req, res) => {
   }
 };
 
+/**
+ * Gibt einen Label anhand seiner Id zurück.
+ * Erwartet als Parameter eine labelid.
+ * Erwartet im Body nichts.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const getLabelById = async (req, res) => {
   const labelId = req.params.labelId;
   const labelRepository = getRepository(Label);
@@ -78,6 +119,13 @@ export const getLabelById = async (req, res) => {
   }
 };
 
+/**
+ * Updatet ein Label anhand seiner Id.
+ * Erwartet als Parameter eine taskId.
+ * Erwartet im Body name.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const updateLabelById = async (req, res) => {
   const labelId = req.params.labelId;
   const {name} = req.body;

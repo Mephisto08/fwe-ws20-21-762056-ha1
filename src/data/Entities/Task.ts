@@ -13,11 +13,11 @@ import {Tracking} from './Tracking';
 // eslint-disable-next-line new-cap
 @Entity()
 /**
- * Class Task
+ * Klasse Task
  */
 export class Task {
   /**
-   * Auto Increment
+   * Auto Inkrement
    */
     // eslint-disable-next-line new-cap
     @PrimaryGeneratedColumn()

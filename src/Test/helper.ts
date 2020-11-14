@@ -13,14 +13,14 @@ import {Builder,
 import {globalRouter} from '../data/Router/router.global';
 
 /**
- * d
+ * Diese Klasse unterstützt bei dem durchführen von Tests
  */
 export class Helper {
   public app: Express | null;
   private dbConnection: Connection;
 
   /**
-   * d
+   * Initalisiert den Helper
    */
   public async init() {
     jest.setTimeout(10000);
@@ -33,20 +33,21 @@ export class Helper {
     );
   }
   /**
-   * d
+   * Diese Funktion löscht alle Datebankinhalte
+   * und stellt den Grundaufbau wieder her
    */
   public resetDatabase = async () => {
     await this.dbConnection.synchronize(true);
   };
   /**
-   * s
+   * Schließt die Datenbankverbindung
    */
   public async shutdown() {
     return this.dbConnection.close();
   }
 
   /**
-   * s
+   * Erstellt in der Datenbank Test-Datensätze
    */
   public async loadFixtures() {
     const loader = new Loader();
@@ -62,18 +63,19 @@ export class Helper {
     }
   }
 
+
   /**
-   * s
-   * @returngsgs
+   * Stellt die Datenbankverbindung her
+   * @return {Connection} funktionierende Datenbankverbindunng
    */
   public getConnection() {
     return this.dbConnection;
   }
 
   /**
-   * fff
-   * @param target ffff
-   * @return ffff
+   * Stellt ein Repository eines Entities bereit mit Hilfe der Datenbank
+   * @param target eine Klasse wird übergeben
+   * @return{Entity} Returned ein repositors mit allen Elemente von einer Klasse
    */
   public getRepo<Entity>(target: ObjectType<Entity>) {
     return this.dbConnection.getRepository(target);

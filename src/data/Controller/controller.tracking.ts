@@ -1,7 +1,15 @@
+
 import {getRepository} from 'typeorm';
 import {Task} from '../Entities/Task';
 import {Tracking} from '../Entities/Tracking';
 
+/**
+ * Erstellt ein Tracking.
+ * Erwartet als Parameter nichts.
+ * Erwartet im Body eine Beschr. und eine Id von einem existierenden Task.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const createTracking = async (req, res) => {
   const {description} = req.body;
   const {task} = req.body;
@@ -35,6 +43,13 @@ export const createTracking = async (req, res) => {
   }
 };
 
+/**
+ * Löscht ein Tracking anhnd seiner Id.
+ * Erwartet als Parameter eine trackingId.
+ * Erwartet im Body nichts.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const deleteTrackingById = async (req, res) => {
   const trackingId = req.params.trackingId;
   const trackingRepository = getRepository(Tracking);
@@ -49,15 +64,33 @@ export const deleteTrackingById = async (req, res) => {
     });
   }
 };
-
+/**
+ * Gibt alle Trackings zurück.
+ * Erwartet als Parameter nichts.
+ * Erwartet im Body nichts.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const getAllTrackings = async (req, res) => {
   const trackingRepository = getRepository(Tracking);
-  const tracking = await trackingRepository.find({relations: ['task']});
-  res.status(200).send({
-    data: tracking,
-  });
+  try {
+    const tracking = await trackingRepository.find({relations: ['task']});
+    res.status(200).send({
+      data: tracking,
+    });
+  } catch (error) {
+    res.status(404).send({
+      status: 'Error: ' + error,
+    });
+  }
 };
-
+/**
+ * Gibt ein Tracking anhanfd seiner Id zurück
+ * Erwartet als Parameter eine trackingId.
+ * Erwartet im Body nichts.
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const getTrackingById = async (req, res) => {
   const trackingId = req.params.trackingId;
   const trackingRepository = getRepository(Tracking);
@@ -74,7 +107,14 @@ export const getTrackingById = async (req, res) => {
     });
   }
 };
-
+/**
+ * Updatet ein Tracking anhand seiner Id.
+ * Erwartet als Parameter eine trackingId.
+ * Erwartet im Body mindesten einen der drei Parameter:
+ * description, timeStart, timeEnd
+ * @param {Request}req Request
+ * @param {Response}res Response
+ */
 export const updateTrackingById = async (req, res) => {
   const trackingId = req.params.trackingId;
   const {description} = req.body;
@@ -84,7 +124,7 @@ export const updateTrackingById = async (req, res) => {
 
   try {
     let tracking =
-    await trackingRepo.findOneOrFail(trackingId, {relations: ['task']});
+    await trackingRepo.findOneOrFail(trackingId);
     tracking.description = description;
     tracking.timeStart = timeStart;
     tracking.timeEnd = timeEnd;

@@ -16,6 +16,9 @@ import {
 // eslint-disable-next-line new-cap
 export const taskRouter = Router({mergeParams: true});
 
+/**
+ * Folgend sind alle Routen aufgeführt, die ein Task hat
+ */
 taskRouter.delete('/:taskId', deleteTaskById);
 
 taskRouter.delete('/label/:taskId', deleteLabelsByTaskId);

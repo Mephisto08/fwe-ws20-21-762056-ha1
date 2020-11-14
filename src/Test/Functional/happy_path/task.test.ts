@@ -17,6 +17,7 @@ describe('Tests for the Task class', () => {
   afterAll(async () => {
     await helper.shutdown();
   });
+
   it('deleteTaskById Test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();

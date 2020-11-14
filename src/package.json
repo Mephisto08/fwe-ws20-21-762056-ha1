@@ -1,13 +1,11 @@
 {
   "name": "fwe",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "FWE",
   "main": "index.ts",
   "scripts": {
     "start": "nodemon --legacy-watch",
-    "test": "jest --verbose --coverage --forceExit --runInBand --detectOpenHandles",
-    "test:watch": "jest --watchAll --verbose --runInBand",
-    "test:ci": "jest --verbose --coverage --ci --forceExit --detectOpenHandles --runInBand"
+    "test": "jest --verbose --coverage --forceExit --runInBand --detectOpenHandles"
   },
   "keywords": [
     "FWE",

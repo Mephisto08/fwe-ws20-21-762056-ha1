@@ -1,5 +1,10 @@
 import {createConnection} from 'typeorm';
 
+/**
+ * Die Datenbankverbindung wird aufgbaut
+ * Die Benutzernamen, Passwort und den Namen der Datenbank werden
+ * aus der .env-Datei geladen
+ */
 export const dbConnection = async () => {
   createConnection({
     host: 'mariadb',
@@ -11,6 +16,6 @@ export const dbConnection = async () => {
     logging: false,
     entities: ['./data/Entities/*.ts'],
   }).then(() => {
-    console.log('DataBase Successfully Connected');
-  }).catch(() => console.log('No Connection'));
+    console.log('Datenbakverbindung wurde erfolgreich hergestellt');
+  }).catch(() => console.log('Keine Verbinndung zur Datenbank möglich!'));
 };
