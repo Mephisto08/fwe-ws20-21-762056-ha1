@@ -18,7 +18,79 @@ describe('Tests for the Task class', () => {
     await helper.shutdown();
   });
 
-  it('deleteTaskById Test', async (done) => {
+  it('addLabelsByTaskId test', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+    let task = new Task();
+    try {
+      task = await helper.getRepo(Task).findOneOrFail({id: 2});
+    } catch (error) {
+    }
+    request(helper.app)
+        .post(`/api/task/label/${task.id}`)
+        .send({
+          labelList: [1],
+        })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(async (err, res) => {
+          if (err) throw err;
+          expect(res.body.data.__labels__.length).toBe(3);
+          expect(res.body.data.__labels__[1].name).toBe('Label Test 3');
+          expect(res.body.data.__labels__[2].id).toBe(1);
+          done();
+        });
+  });
+
+  it('createTask test', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+
+    request(helper.app)
+        .post('/api/task')
+        .send({
+          name: 'Task Test 4',
+          description: 'Beschreibung Test 4',
+        })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(async (err, res) => {
+          if (err) throw err;
+          const [, task] =
+            await helper.getRepo(Task).findAndCount();
+          expect(task).toBe(4);
+          expect(res.body.data.name).toBe('Task Test 4');
+          done();
+        });
+  });
+
+  it('deleteLabelsByTaskId test', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+    let task = new Task();
+    try {
+      task = await helper.getRepo(Task).findOneOrFail({id: 2});
+    } catch (error) {
+    }
+    request(helper.app)
+        .delete(`/api/task/label/${task.id}`)
+        .send({
+          labelList: [2],
+        })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(async (err, res) => {
+          if (err) throw err;
+          expect(res.body.data.__labels__.length).toBe(1);
+          expect(res.body.data.__labels__[0].id).toBe(3);
+          done();
+        });
+  });
+
+  it('deleteTaskById test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let task = new Task();
@@ -42,72 +114,8 @@ describe('Tests for the Task class', () => {
           done();
         });
   });
-  it('deleteLabelsByTaskId Test', async (done) => {
-    await helper.resetDatabase();
-    await helper.loadFixtures();
-    let task = new Task();
-    try {
-      task = await helper.getRepo(Task).findOneOrFail({id: 2});
-    } catch (error) {
-    }
-    request(helper.app)
-        .delete(`/api/task/label/${task.id}`)
-        .send({
-          labelList: [2],
-        })
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .expect(200)
-        .end(async (err, res) => {
-          if (err) throw err;
-          expect(res.body.data.__labels__.length).toBe(1);
-          expect(res.body.data.__labels__[0].id).toBe(3);
-          done();
-        });
-  });
-  it('getAllTasks Test', async (done) => {
-    await helper.resetDatabase();
-    await helper.loadFixtures();
 
-    request(helper.app)
-        .get('/api/task')
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .expect(200)
-        .end((err, res) => {
-          if (err) throw err;
-          expect(res.body.data.length).toBe(3);
-          expect(res.body.data[1].name).toBe('Task Test 2');
-          expect(res.body.data[1].description).toBe('Beschreibung Test 2');
-          done();
-        });
-  });
-  it('getTaskById Test', async (done) => {
-    await helper.resetDatabase();
-    await helper.loadFixtures();
-    let task = new Task();
-    try {
-      task = await helper.getRepo(Task).findOneOrFail({id: 2});
-    } catch (error) {
-    }
-
-
-    request(helper.app)
-        .get(`/api/task/${task.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .expect(200)
-        .end(async (err, res) => {
-          if (err) throw err;
-          const [, task] =
-            await helper.getRepo(Task).findAndCount();
-          expect(task).toBe(3);
-          expect(res.body.data.name).toBe('Task Test 2');
-          expect(res.body.data.description).toBe('Beschreibung Test 2');
-          done();
-        });
-  });
-  it('getAllLabesByTaskId Test', async (done) => {
+  it('getAllLabesByTaskId test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let task = new Task();
@@ -134,7 +142,26 @@ describe('Tests for the Task class', () => {
           done();
         });
   });
-  it('getAllTrackingsByTaskId Test', async (done) => {
+
+  it('getAllTasks test', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+
+    request(helper.app)
+        .get('/api/task')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end((err, res) => {
+          if (err) throw err;
+          expect(res.body.data.length).toBe(3);
+          expect(res.body.data[1].name).toBe('Task Test 2');
+          expect(res.body.data[1].description).toBe('Beschreibung Test 2');
+          done();
+        });
+  });
+
+  it('getAllTrackingsByTaskId test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let task = new Task();
@@ -159,7 +186,78 @@ describe('Tests for the Task class', () => {
           done();
         });
   });
-  it('updateTaskById Test', async (done) => {
+
+  it('getTaskById test', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+    let task = new Task();
+    try {
+      task = await helper.getRepo(Task).findOneOrFail({id: 2});
+    } catch (error) {
+    }
+
+
+    request(helper.app)
+        .get(`/api/task/${task.id}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(async (err, res) => {
+          if (err) throw err;
+          const [, task] =
+            await helper.getRepo(Task).findAndCount();
+          expect(task).toBe(3);
+          expect(res.body.data.name).toBe('Task Test 2');
+          expect(res.body.data.description).toBe('Beschreibung Test 2');
+          done();
+        });
+  });
+
+  it('sendSlackAll test', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+    let task = new Task();
+    try {
+      task = await helper.getRepo(Task).findOneOrFail({id: 2});
+    } catch (error) {
+    }
+    request(helper.app)
+        .post(`/api/task/slack`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(async (err, res) => {
+          if (err) throw err;
+          const [, taskLength] =
+            await helper.getRepo(Task).findAndCount();
+          expect(taskLength).toBe(3);
+          expect(res.body.data[1].name).toBe('Task Test 2');
+          expect(res.body.data[1].id).toBe(task.id);
+          done();
+        });
+  });
+
+  it('sendSlackByTaskId test', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+    let task = new Task();
+    try {
+      task = await helper.getRepo(Task).findOneOrFail({id: 3});
+    } catch (error) {
+    }
+    request(helper.app)
+        .post(`/api/task/slack/${task.id}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(async (err, res) => {
+          expect(res.body.data.name).toBe('Task Test 3');
+          expect(res.body.data.id).toBe(3);
+          done();
+        });
+  });
+
+  it('updateTaskById test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let task = new Task();
@@ -184,52 +282,6 @@ describe('Tests for the Task class', () => {
           expect(task).toBe(3);
           expect(res.body.data.name).toBe('Task Test 2 Update');
           expect(res.body.data.description).toBe('Beschreibung Test 2 Update');
-          done();
-        });
-  });
-  it('createTask Test', async (done) => {
-    await helper.resetDatabase();
-    await helper.loadFixtures();
-
-    request(helper.app)
-        .post('/api/task')
-        .send({
-          name: 'Task Test 4',
-          description: 'Beschreibung Test 4',
-        })
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .expect(200)
-        .end(async (err, res) => {
-          if (err) throw err;
-          const [, task] =
-            await helper.getRepo(Task).findAndCount();
-          expect(task).toBe(4);
-          expect(res.body.data.name).toBe('Task Test 4');
-          done();
-        });
-  });
-  it('addLabelsByTaskId Test', async (done) => {
-    await helper.resetDatabase();
-    await helper.loadFixtures();
-    let task = new Task();
-    try {
-      task = await helper.getRepo(Task).findOneOrFail({id: 2});
-    } catch (error) {
-    }
-    request(helper.app)
-        .post(`/api/task/label/${task.id}`)
-        .send({
-          labelList: [1],
-        })
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .expect(200)
-        .end(async (err, res) => {
-          if (err) throw err;
-          expect(res.body.data.__labels__.length).toBe(3);
-          expect(res.body.data.__labels__[1].name).toBe('Label Test 3');
-          expect(res.body.data.__labels__[2].id).toBe(1);
           done();
         });
   });

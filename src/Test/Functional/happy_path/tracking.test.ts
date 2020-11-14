@@ -18,7 +18,7 @@ describe('Tests for the Tracking class', () => {
     await helper.shutdown();
   });
 
-  it('createTracking Test', async (done) => {
+  it('createTracking test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let task = new Task();
@@ -49,7 +49,7 @@ describe('Tests for the Tracking class', () => {
           done();
         });
   });
-  it('deleteTrackingById Test', async (done) => {
+  it('deleteTrackingById test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let tracking = new Tracking();
@@ -68,7 +68,7 @@ describe('Tests for the Tracking class', () => {
           done();
         });
   });
-  it('getAllTracking Test', async (done) => {
+  it('getAllTracking test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let task = new Task();
@@ -90,7 +90,7 @@ describe('Tests for the Tracking class', () => {
           done();
         });
   });
-  it('getTrackingById Test', async (done) => {
+  it('getTrackingById test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let tracking = new Tracking();
@@ -118,7 +118,7 @@ describe('Tests for the Tracking class', () => {
           done();
         });
   });
-  it('updateTrackingById Test', async (done) => {
+  it('updateTrackingById test', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
     let tracking = new Tracking();

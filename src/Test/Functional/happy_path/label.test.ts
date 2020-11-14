@@ -1,3 +1,4 @@
+
 import {Helper} from '../../helper';
 import request from 'supertest';
 import {Label} from '../../../data/Entities/Label';
@@ -148,3 +149,4 @@ describe('Tests for the Label class', () => {
         });
   });
 });
+

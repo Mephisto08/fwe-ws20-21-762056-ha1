@@ -63,19 +63,10 @@ export class Helper {
     }
   }
 
-
-  /**
-   * Stellt die Datenbankverbindung her
-   * @return {Connection} funktionierende Datenbankverbindunng
-   */
-  public getConnection() {
-    return this.dbConnection;
-  }
-
   /**
    * Stellt ein Repository eines Entities bereit mit Hilfe der Datenbank
-   * @param target eine Klasse wird übergeben
-   * @return{Entity} Returned ein repositors mit allen Elemente von einer Klasse
+   * @param {ObjectType<Entity>}target eine Klasse wird übergeben
+   * @return {Entity} Returned ein Repo mit allen Elemente von einer Klasse
    */
   public getRepo<Entity>(target: ObjectType<Entity>) {
     return this.dbConnection.getRepository(target);

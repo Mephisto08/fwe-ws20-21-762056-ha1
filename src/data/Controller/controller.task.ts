@@ -2,7 +2,6 @@ import {getRepository} from 'typeorm';
 import {Label} from '../Entities/Label';
 import {Task} from '../Entities/Task';
 import Axios from 'axios';
-
 /**
  * Fügt ein Task eine Label zu.
  * Erwartet als Parameter eine Task Id.
@@ -11,50 +10,49 @@ import Axios from 'axios';
  * @param {Response}res Response
  */
 export const addLabelsByTaskId = async (req, res) =>{
-  type NewType = number;
   const taskId = req.params.taskId;
   const {labelList} = req.body;
 
-  if (!checkAllElementsSet) {
+  if (!taskId || !labelList) {
     res.status(400).send({
-      status: 'Error: Not all parameters were set.',
+      error: 'Error: Parameter fehlt!',
     });
-    const taskRepo = getRepository(Task);
-
-    try {
-      const task = await taskRepo.findOneOrFail(taskId);
-      const taskLabelsList = await task.labels;
-      const labelRepo = getRepository(Label);
-
-      for (let i = 0; i < Object.keys(labelList).length; ++i) {
-        const labelId: NewType = labelList[i];
-        const label = await labelRepo.findOneOrFail(labelId);
-        taskLabelsList.push(label);
-        await taskRepo.save(task);
-      }
-      res.status(200).send({
-        data: task,
-      });
-    } catch (error) {
-      res.status(404).send({
-        status: 'Error: ' + error,
-      });
-    }
-  }
+    return;
+  };
+  addLabel(taskId, labelList, res);
 };
+
 
 /**
- * Prüft ob alle Elemente gesetzt wurden, wenn ein Task erstellt werden soll.
- * @param {number}taskId Id einer Task
- * @param {list}labelList Liste mit Labels
- * @return {boolean} True wenn alle Parameter gesetzt wurden.
+ * Erstellt einen Task. Wird nur aus addlabelsByTaskId aufgerufen.
+ * @param {number}taskId Id eines Task
+ * @param {list}labelList Liste mit Label id
+ * @param {Response}res Response
  */
-function checkAllElementsSet(taskId, labelList) {
-  if (taskId === undefined || labelList === undefined) {
-    return false;
+async function addLabel(taskId, labelList, res) {
+  type NewType = number;
+  const taskRepo = getRepository(Task);
+  try {
+    const task = await taskRepo.findOneOrFail(taskId);
+    const taskLabelsList = await task.labels;
+    const labelRepo = getRepository(Label);
+
+    for (let i = 0; i < Object.keys(labelList).length; ++i) {
+      const labelId: NewType = labelList[i];
+      const label = await labelRepo.findOneOrFail(labelId);
+      taskLabelsList.push(label);
+      await taskRepo.save(task);
+    }
+    res.status(200).send({
+      data: task,
+    });
+  } catch (error) {
+    res.status(404).send({
+      status: 'Error: ' + error,
+    });
   }
-  return true;
-};
+}
+
 
 /**
  * Erstellt einen Task.
@@ -66,22 +64,22 @@ function checkAllElementsSet(taskId, labelList) {
 export const createTask = async (req, res) => {
   const {name, description} = req.body;
 
+  if (!name || !description) {
+    res.status(400).send({
+      status: 'Error: Parameter fehlt!',
+    });
+    return;
+  };
   const task = new Task();
   task.name = name;
   task.description = description;
 
   const taskRepository = getRepository(Task);
-  try {
-    const createdTask = await taskRepository.save(task);
+  const createdTask = await taskRepository.save(task);
 
-    res.status(200).send({
-      data: createdTask,
-    });
-  } catch (error) {
-    res.status(404).send({
-      status: 'Error: ' + error,
-    });
-  }
+  res.status(200).send({
+    data: createdTask,
+  });
 };
 
 /**
@@ -94,14 +92,20 @@ export const createTask = async (req, res) => {
 export const deleteLabelsByTaskId = async (req, res) =>{
   const taskId = req.params.taskId;
   const {labelList} = req.body;
-  const taskRepo = getRepository(Task);
+
+  if (checkIfAllParamsSet(taskId, labelList)) {
+    res.status(400).send({
+      status: 'Error: Parameter fehlt!',
+    });
+    return;
+  };
 
   try {
+    const taskRepo = getRepository(Task);
     const task = await taskRepo.findOneOrFail(taskId);
     let taskLabelsList = await task.labels;
 
-    taskLabelsList = taskLabelsList.filter((label) =>
-      !labelList.includes(label.id));
+    taskLabelsList = deletsLabelsFromLabelList(taskLabelsList, labelList);
 
     task.labels = Promise.resolve(taskLabelsList);
 
@@ -111,7 +115,7 @@ export const deleteLabelsByTaskId = async (req, res) =>{
     });
   } catch (error) {
     res.status(404).send({
-      status: 'Error: ' + error + taskId + 'task',
+      status: 'Error: ' + error,
     });
   }
 };
@@ -169,15 +173,9 @@ export const getAllLabesByTaskId = async (req, res) => {
  */
 export const getAllTasks = async (req, res) => {
   const taskRepository = getRepository(Task);
-  try {
-    const tasks = await taskRepository.find(
-        {relations: ['trackings', 'labels']});
-    res.status(200).send({data: tasks});
-  } catch (error) {
-    res.status(404).send({
-      status: 'Error: ' + error,
-    });
-  }
+  const tasks = await taskRepository.find(
+      {relations: ['trackings', 'labels']});
+  res.status(200).send({data: tasks});
 };
 
 /**
@@ -227,33 +225,41 @@ export const getTaskById = async (req, res) => {
 };
 
 /**
- * Updatet ein Task anhand seiner Id.
- * Erwartet als Parameter eine taskId.
- * Erwartet im Body mindesten einen der zwei Parameter:
- * name, description
+ * Sendet alle Task an Slack Channel.
+ * Erwartet als Parameter nichts.
+ * Erwartet im Body nichts.
  * @param {Request}req Request
  * @param {Response}res Response
  */
-export const updateTaskById = async (req, res) => {
-  const taskId = req.params.taskId;
-  const {name, description} = req.body;
+export const sendSlackAll = async (req, res) => {
   const taskRepository = getRepository(Task);
 
-  try {
-    let task =
-    await taskRepository.findOneOrFail(taskId,
-        {relations: ['trackings', 'labels']});
-    task.name = name;
-    task.description = description;
-
-    task = await taskRepository.save(task);
-
+  const task = await taskRepository.find(
+      {relations: ['trackings', 'labels']});
+  let allTasks: string = ``;
+  for (let i = 0; i < task.length; ++i) {
+    allTasks +=
+      ` Task Id: ${task[i].id}:
+       Name:         ${task[i].name} 
+       Beschr:       ${task[i].description}
+       Erzeugt:      ${task[i].created}
+       Update:       ${task[i].updated}
+      \n`;
+  }
+  if (task.length === 0) {
+    await Axios.post(`https://hooks.slack.com/services/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`, {
+      text: `!!! Keine Task in der Datenbank !!!`,
+    });
+    res.status(200).send({
+      data: `!!! Keine Task in der Datenbank !!!`,
+    });
+    return;
+  } else {
+    await Axios.post(`https://hooks.slack.com/services/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`, {
+      text: `Tasks: \n${allTasks}`,
+    });
     res.status(200).send({
       data: task,
-    });
-  } catch (error) {
-    res.status(404).send({
-      status: 'Error: ' + error,
     });
   }
 };
@@ -295,47 +301,58 @@ export const sendSlackByTaskId = async (req, res) => {
 };
 
 /**
- * Sendet alle Task an Slack Channel.
- * Erwartet als Parameter nichts.
- * Erwartet im Body nichts.
+ * Updatet ein Task anhand seiner Id.
+ * Erwartet als Parameter eine taskId.
+ * Erwartet im Body mindesten einen der zwei Parameter:
+ * name, description
  * @param {Request}req Request
  * @param {Response}res Response
  */
-export const sendSlackAll = async (req, res) => {
+export const updateTaskById = async (req, res) => {
+  const taskId = req.params.taskId;
+  const {name, description} = req.body;
   const taskRepository = getRepository(Task);
 
   try {
-    const task = await taskRepository.find(
+    let task =
+    await taskRepository.findOneOrFail(taskId,
         {relations: ['trackings', 'labels']});
-    let allTasks: string = ``;
-    for (let i = 0; i < task.length; ++i) {
-      allTasks +=
-      ` Task Id: ${task[i].id}:
-       Name:         ${task[i].name} 
-       Beschr:       ${task[i].description}
-       Erzeugt:      ${task[i].created}
-       Update:       ${task[i].updated}
-      \n`;
-    }
-    if (task.length === 0) {
-      await Axios.post(`https://hooks.slack.com/services/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`, {
-        text: `!!! Keine Task in der Datenbank !!!`,
-      });
-    } else {
-      await Axios.post(`https://hooks.slack.com/services/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`, {
-        text: `Tasks: \n${allTasks}`,
-      });
-    }
+    task.name = name;
+    task.description = description;
+
+    task = await taskRepository.save(task);
+
     res.status(200).send({
       data: task,
     });
   } catch (error) {
-    await Axios.post(`https://hooks.slack.com/services/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`, {
-      text: `!!! Fehler bei der Übertragung !!!`,
-    });
     res.status(404).send({
       status: 'Error: ' + error,
     });
   }
 };
+
+/**
+ * Filtert alle Labels aus der taskLabelList heraus,
+ * die in der labelList angegeben sind
+ * @param {label[]}taskLabelsList Liste mit Labels eines bestimmten Tasks
+ * @param {any}labelList Liste mit Label-Id,
+ * die aus der oberen Liste gelöscht werden
+ * @return {label[]} Liste mit Labels.
+ * Beinhaltet nur noch die Labels die gelöscht werden sollten.
+ */
+function deletsLabelsFromLabelList(taskLabelsList: Label[], labelList: any) {
+  taskLabelsList = taskLabelsList.filter((label) => !labelList.includes(label.id));
+  return taskLabelsList;
+}
+
+/**
+ * Prüft, ob alle Parameter gesetzt werden für deleteLabelsByTaskId
+ * @param {any}taskId Id von einer Task
+ * @param {any}labelList Liste mit Id von Label
+ * @return {boolean} True, wenn alle Parameter gesetzt wurden
+ */
+function checkIfAllParamsSet(taskId: any, labelList: any) {
+  return !taskId || !labelList;
+}
 

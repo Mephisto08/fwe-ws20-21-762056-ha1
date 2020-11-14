@@ -17,30 +17,24 @@ export const createTracking = async (req, res) => {
   const tracking = new Tracking();
   const taskRepo = getRepository(Task);
 
-  if (description === undefined || task === undefined) {
+  if (!description || !task) {
     res.status(400).send({
-      status: 'Error: Not all parameters were set.',
+      error: 'Error: Parameter fehlt!',
     });
-  } else {
-    try {
-      const taske =
+    return;
+  };
+  const taske =
       await taskRepo.findOneOrFail(task, {relations: ['trackings']});
 
-      tracking.description = description;
-      tracking.task = taske;
+  tracking.description = description;
+  tracking.task = taske;
 
-      const trackingRepository = getRepository(Tracking);
-      const createdTracking = await trackingRepository.save(tracking);
+  const trackingRepository = getRepository(Tracking);
+  const createdTracking = await trackingRepository.save(tracking);
 
-      res.status(200).send({
-        data: createdTracking,
-      });
-    } catch (error) {
-      res.status(404).send({
-        status: 'Error: ' + error,
-      });
-    }
-  }
+  res.status(200).send({
+    data: createdTracking,
+  });
 };
 
 /**
@@ -64,6 +58,7 @@ export const deleteTrackingById = async (req, res) => {
     });
   }
 };
+
 /**
  * Gibt alle Trackings zurück.
  * Erwartet als Parameter nichts.
@@ -73,17 +68,12 @@ export const deleteTrackingById = async (req, res) => {
  */
 export const getAllTrackings = async (req, res) => {
   const trackingRepository = getRepository(Tracking);
-  try {
-    const tracking = await trackingRepository.find({relations: ['task']});
-    res.status(200).send({
-      data: tracking,
-    });
-  } catch (error) {
-    res.status(404).send({
-      status: 'Error: ' + error,
-    });
-  }
+  const tracking = await trackingRepository.find({relations: ['task']});
+  res.status(200).send({
+    data: tracking,
+  });
 };
+
 /**
  * Gibt ein Tracking anhanfd seiner Id zurück
  * Erwartet als Parameter eine trackingId.
@@ -124,7 +114,7 @@ export const updateTrackingById = async (req, res) => {
 
   try {
     let tracking =
-    await trackingRepo.findOneOrFail(trackingId);
+    await trackingRepo.findOneOrFail(trackingId, {relations: ['task']});
     tracking.description = description;
     tracking.timeStart = timeStart;
     tracking.timeEnd = timeEnd;

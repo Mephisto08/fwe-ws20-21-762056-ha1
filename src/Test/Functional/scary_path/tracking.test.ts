@@ -1,8 +1,5 @@
 import {Helper} from '../../helper';
 import request from 'supertest';
-import {Tracking} from '../../../data/Entities/Tracking';
-import {Task} from '../../../data/Entities/Task';
-
 
 const helper = new Helper();
 helper.init();
@@ -18,133 +15,82 @@ describe('Tests for the Tracking class', () => {
     await helper.shutdown();
   });
 
-  it('createTracking Test', async (done) => {
+  /**
+  * Es werden nicht alle notwendigen Information mitgeschickt
+  */
+  it('createTracking test not all infos', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
-    let task = new Task();
-    try {
-      task = await helper.getRepo(Task).findOneOrFail({id: 2});
-    } catch (error) {
-    }
-    const taskId = task.id;
-    const taskName = task.name;
 
     request(helper.app)
         .post('/api/tracking')
         .send({
           description: 'Tracking Test 4',
-          task: `${taskId}`,
         })
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(400)
         .end(async (err, res) => {
           if (err) throw err;
-          const [, tracking] =
-            await helper.getRepo(Tracking).findAndCount();
-          expect(tracking).toBe(4);
-          expect(res.body.data.description).toBe('Tracking Test 4');
-          expect(res.body.data.task.id).toBe(taskId);
-          expect(res.body.data.task.name).toBe(taskName);
+          expect(res.body.error).toBe('Error: Parameter fehlt!');
           done();
         });
   });
-  it('deleteTrackingById Test', async (done) => {
+
+  /**
+  * Es wird eine Tracking Id mitgeschickt, welche nicht existiert
+  */
+  it('deleteTrackingById test wrong infos', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
-    let tracking = new Tracking();
-    tracking = await helper.getRepo(Tracking).findOneOrFail({id: 2});
+    const trackingId = 55;
 
     request(helper.app)
-        .delete(`/api/tracking/${tracking.id}`)
+        .delete(`/api/tracking/${trackingId}`)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(404)
         .end(async (err, res) => {
           if (err) throw err;
-          const [, tracking] =
-            await helper.getRepo(Tracking).findAndCount();
-          expect(tracking).toBe(2);
           done();
         });
   });
-  it('getAllTracking Test', async (done) => {
-    await helper.resetDatabase();
-    await helper.loadFixtures();
-    let task = new Task();
-    try {
-      task = await helper.getRepo(Task).findOneOrFail({id: 2});
-    } catch (error) {
-    }
-    request(helper.app)
-        .get('/api/tracking')
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .expect(200)
-        .end((err, res) => {
-          if (err) throw err;
-          expect(res.body.data.length).toBe(3);
-          expect(res.body.data[1].description).toBe('Tracking Test 2');
-          expect(res.body.data[1].task.id).toBe(task.id);
-          expect(res.body.data[1].task.name).toBe('Task Test 2');
-          done();
-        });
-  });
-  it('getTrackingById Test', async (done) => {
-    await helper.resetDatabase();
-    await helper.loadFixtures();
-    let tracking = new Tracking();
-    let task = new Task();
-    try {
-      tracking = await helper.getRepo(Tracking).findOneOrFail({id: 2});
-      task = await helper.getRepo(Task).findOneOrFail({id: 2});
-    } catch (error) {
-    }
 
+  /**
+  * Es wird eine Tracking Id mitgeschickt, welche nicht existiert
+  */
+  it('getTrackingById test wrong infos', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+    const trackingId = 55;
     request(helper.app)
-        .get(`/api/tracking/${tracking.id}`)
+        .get(`/api/tracking/${trackingId}`)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(404)
         .end(async (err, res) => {
           if (err) throw err;
-          const [, tracking] =
-            await helper.getRepo(Tracking).findAndCount();
-          expect(tracking).toBe(3);
-
-          expect(res.body.data.description).toBe('Tracking Test 2');
-          expect(res.body.data.task.id).toBe(task.id);
-          expect(res.body.data.task.name).toBe('Task Test 2');
           done();
         });
   });
-  it('updateTrackingById Test', async (done) => {
+
+  /**
+  * Es wird eine Tracking Id mitgeschickt, welche nicht existiert
+  */
+  it('updateTrackingById test wrong infos', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
-    let tracking = new Tracking();
-    let task = new Task();
-    try {
-      tracking = await helper.getRepo(Tracking).findOneOrFail({id: 2});
-      task = await helper.getRepo(Task).findOneOrFail({id: 2});
-    } catch (error) {
-    }
-
+    const trackingId = 55;
     request(helper.app)
-        .patch(`/api/tracking/${tracking.id}`)
+        .patch(`/api/tracking/${trackingId}`)
         .send({
           description: 'Tracking Test 2 Update',
         })
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(404)
         .end(async (err, res) => {
           if (err) throw err;
-          const [, tracking] =
-          await helper.getRepo(Tracking).findAndCount();
-          expect(tracking).toBe(3);
-          expect(res.body.data.description).toBe('Tracking Test 2 Update');
-          expect(res.body.data.task.id).toBe(task.id);
-          expect(res.body.data.task.name).toBe('Task Test 2');
           done();
         });
   });

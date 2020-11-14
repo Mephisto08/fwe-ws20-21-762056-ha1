@@ -11,27 +11,21 @@ import {Label} from '../Entities/Label';
 export const createLabel = async (req, res) => {
   const {name} = req.body;
 
-  if (name === undefined) {
+  if (!name) {
     res.status(400).send({
-      status: 'Error: Not all parameters were set.',
+      error: 'Error: Parameter fehlt!',
     });
-  } else {
-    try {
-      const label = new Label();
-      label.name = name;
+    return;
+  };
+  const label = new Label();
+  label.name = name;
 
-      const labelRepository = getRepository(Label);
-      const createdlabel = await labelRepository.save(label);
+  const labelRepository = getRepository(Label);
+  const createdlabel = await labelRepository.save(label);
 
-      res.status(200).send({
-        data: createdlabel,
-      });
-    } catch (error) {
-      res.status(404).send({
-        status: 'Error: ' + error,
-      });
-    }
-  }
+  res.status(200).send({
+    data: createdlabel,
+  });
 };
 
 /**
@@ -65,14 +59,8 @@ export const deleteLabelById = async (req, res) => {
  */
 export const getAllLabels = async (req, res) => {
   const labelRepository = getRepository(Label);
-  try {
-    const labels = await labelRepository.find();
-    res.send({data: labels});
-  } catch (error) {
-    res.status(404).send({
-      status: 'Error: ' + error,
-    });
-  }
+  const labels = await labelRepository.find();
+  res.send({data: labels});
 };
 
 /**
