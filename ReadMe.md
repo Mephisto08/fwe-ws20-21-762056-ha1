@@ -209,6 +209,14 @@ Dies ist das Backend für die erste Hausaufgabe.
 		- 
 				{"description":  "Tracking Test 2 Update" }
 
+## Datenbank
+Die Daten werden in einer Datenbank gespeichert. Es wird eine mariaDB verwendet. Die Daten, die die Datenbank beinhaltet, können über die Konsole eingesehen werden.
+Über den folgenden Befehl, gelangt man in die Datenbank und kann dort über SQL die Datensätze abfragen:
+
+			docker-compose exec  mariadb mysql -uexampleuser -pexamplepwd `exampledb`
+			
+Der Nutzername, das Passwort und der Namen der Datenbank sind an die .env.example angelehnt. Will man andere Zugangsdaten, muss der Befehl an diese angepasst werden.
+
 ## Test
 Die Anwendung wird durch automatisierte Tests mittels jest getestet.
 Um die Tests auszuführen, wird folgender Befehl in die Kommando Zeile eingegeben:
