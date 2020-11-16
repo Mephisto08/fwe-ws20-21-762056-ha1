@@ -17,7 +17,7 @@ Dies ist das Backend für die erste Hausaufgabe.
 
 ## Routen
 - Unter **localhost:3000/api** ist die Anwendung erreichbar.
-- :taskId oder ähnliches sind Platzhalter. Diese müssen durch existierde Ids von Objekten ersetzt werden. 
+- "*:taskId*" oder ähnliches sind Platzhalter. Diese müssen durch existierde Ids von Objekten ersetzt werden. 
 
 ### Task:
 
