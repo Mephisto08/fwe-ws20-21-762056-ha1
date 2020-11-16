@@ -1,4 +1,3 @@
-
 import {getRepository} from 'typeorm';
 import {Task} from '../Entities/Task';
 import {Tracking} from '../Entities/Tracking';
@@ -6,7 +5,8 @@ import {Tracking} from '../Entities/Tracking';
 /**
  * Erstellt ein Tracking.
  * Erwartet als Parameter nichts.
- * Erwartet im Body eine Beschr. und eine Id von einem existierenden Task.
+ * Erwartet im Body eine description und
+ * eine taskId von einem existierenden Task.
  * @param {Request}req Request
  * @param {Response}res Response
  */
@@ -38,7 +38,7 @@ export const createTracking = async (req, res) => {
 };
 
 /**
- * Löscht ein Tracking anhnd seiner Id.
+ * Löscht ein Tracking anhand seiner Id.
  * Erwartet als Parameter eine trackingId.
  * Erwartet im Body nichts.
  * @param {Request}req Request
@@ -75,7 +75,7 @@ export const getAllTrackings = async (req, res) => {
 };
 
 /**
- * Gibt ein Tracking anhanfd seiner Id zurück
+ * Gibt ein Tracking anhand seiner Id zurück.
  * Erwartet als Parameter eine trackingId.
  * Erwartet im Body nichts.
  * @param {Request}req Request
