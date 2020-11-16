@@ -238,12 +238,16 @@ Die Zusatzfunktion nutzt die API von Slack. Man kann entweder einen Task anhand 
 
 Dies funktioniert über die "Eingehende Webhooks". Diese müssen aktiviert werden für den Channel für den das senden von Tasks gewollt ist. 
 
-Wenn dies geschehen ist, erhält man für den Channel der ausgewählt wurde eine Webadresse wie diese.
+Wenn dies geschehen ist, erhält man für den Channel der ausgewählt wurde, eine Webadresse wie diese.
 		
 		https://hooks.slack.com/services/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
 
-Diese kann man nun in die beiden Routen "*sendSlackAll*"  und "*sendSlackByTaskId*" einfügen. Nun kann man die Route aufrufen und es werden entweder alle oder nur eine Task entsprechend der Route an den eingetragenen Slack Channel gesendet.
-Ich habe einen Test-Slack Channel angelegt. Für diesen funktioniert das aktuelle Projekt. 
+Diese kann man nun in die beiden Routen "*sendSlackAll*"  und "*sendSlackByTaskId*" als Zieladdresse eingeben werden. Nun kann man die Route aufrufen und es werden entweder alle oder nur eine Task entsprechend der Route, an den eingetragenen Slack Channel gesendet.
+Ich habe einen Test-Slack Workspace angelegt. Für diesen funktioniert das aktuelle Projekt. 
 Diesem kann an unter dem folgenden Link beitreten:
 
  https://join.slack.com/t/fwegruppe/shared_invite/ztjavctzv501mPFoDGYL5v_MrDH3y13A
+
+ - In den Channel *taskall* werden alle Task gesendet. Hierfür wird die Route *sendSlackAll* verwendet.
+ - In den Channel *taskbyid* wird immer nur eine Task gesendet, die mittels ihrer Id ausgewält wurde. Hierfür wird die Route *sendSlackByTaskId* verwendet.
+
