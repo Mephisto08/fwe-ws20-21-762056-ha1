@@ -25,6 +25,7 @@ Dies ist das Backend für die erste Hausaufgabe in dem Fach Fortgeschrittene Web
 ## Routen
 - Unter **localhost:3000/api** ist die Anwendung erreichbar.
 - "*:taskId*, *:labelId*, *:trackingId*" sind Platzhalter. Diese müssen durch existierde Ids von Objekten ersetzt werden. 
+- Postman wird empfohlen, um damit die Routen auszuführen und Daten hinzuzufügen.
 
 ### <ins> Task: </ins>
 
