@@ -22,6 +22,8 @@ Dies ist das Backend für die erste Hausaufgabe in dem Fach Fortgeschrittene Web
 
 		docker-compose up
 
+**Hinweis:**  Es kann kann mehrere Minuten dauern, bis alle notwendigen Dateien heruntergeladen sind.
+
 ## Routen
 - Unter **localhost:3000/api** ist die Anwendung erreichbar.
 - "*:taskId*, *:labelId*, *:trackingId*" sind Platzhalter. Diese müssen durch existierde Ids von Objekten ersetzt werden. 
