@@ -228,4 +228,4 @@ Diese kann man nun in die beiden Routen "*sendSlackAll*"  und "*sendSlackByTaskI
 Ich habe einen Test-Slack Channel angelegt. Für diesen funktioniert das aktuelle Projekt. 
 Diesem kann an unter dem folgenden Link beitreten:
 
-				https://join.slack.com/t/fwegruppe/shared_invite/ztjavctzv501mPFoDGYL5v_MrDH3y13A
+ https://join.slack.com/t/fwegruppe/shared_invite/ztjavctzv501mPFoDGYL5v_MrDH3y13A
