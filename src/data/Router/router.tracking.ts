@@ -13,12 +13,9 @@ export const trackingRouter = Router({mergeParams: true});
 /**
  * Folgend sind alle Routen aufgeführt, die ein tracing hat
  */
+trackingRouter.post('/', createTracking);
 trackingRouter.delete('/:trackingId', deleteTrackingById);
-
 trackingRouter.get('/', getAllTrackings);
-
 trackingRouter.get('/:trackingId', getTrackingById);
-
 trackingRouter.patch('/:trackingId', updateTrackingById);
 
-trackingRouter.post('/', createTracking);
