@@ -235,7 +235,9 @@ Die Code der Anwendung wird mittels es-lint  überprüft. Um alle Fehler anzuzei
 
 ## Zusatzaufgabe
 Die Zusatzfunktion nutzt die API von Slack. Man kann entweder einen Task anhand seiner Id an einen Channel senden oder kann alle seine Tasks an einen Slack Channel senden. Die Routen, die hier zur Verfügung stehen kann man in dem Unterpunkt **Routen** **Task** einsehen.
+
 Dies funktioniert über die "Eingehende Webhooks". Diese müssen aktiviert werden für den Channel für den das senden von Tasks gewollt ist. 
+
 Wenn dies geschehen ist, erhält man für den Channel der ausgewählt wurde eine Webadresse wie diese.
 		
 		https://hooks.slack.com/services/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
