@@ -19,7 +19,7 @@ Dies ist das Backend für die erste Hausaufgabe.
 - Unter **localhost:3000/api** ist die Anwendung erreichbar.
 - "*:taskId*, *:labelId*, *:trackingId*" sind Platzhalter. Diese müssen durch existierde Ids von Objekten ersetzt werden. 
 
-### Task:
+### <ins> Task: </ins>
 
 - *addLabelsByTaskId*
 	- Fügt ein Task eine Label zu.
@@ -114,7 +114,7 @@ Dies ist das Backend für die erste Hausaufgabe.
 
 
 
-### Label:
+### <ins> Label: </ins>
 
 - *createLabel*
 	- Erstellt ein Label.
@@ -165,7 +165,7 @@ Dies ist das Backend für die erste Hausaufgabe.
 		- 
 				{ "name":  "Label Test 2 Update" }
 
-### Tracking:
+### <ins> Tracking: </ins>
 
 - *createTracking*
 	- Erstellt ein Tracking.
