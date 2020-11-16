@@ -14,16 +14,11 @@ export const labelRouter = Router({mergeParams: true});
 /**
  * Folgend sind alle Routen aufgeführt, die ein Label hat
  */
-labelRouter.delete('/:labelId', deleteLabelById);
-
-labelRouter.get('/', getAllLabels);
-
-labelRouter.get('/:labelId', getLabelById);
-
-labelRouter.get('/task/:labelId', getAllTasksByLabelId);
-
-labelRouter.patch('/:labelId', updateLabelById);
-
 labelRouter.post('/', createLabel);
+labelRouter.delete('/:labelId', deleteLabelById);
+labelRouter.get('/', getAllLabels);
+labelRouter.get('/task/:labelId', getAllTasksByLabelId);
+labelRouter.get('/:labelId', getLabelById);
+labelRouter.patch('/:labelId', updateLabelById);
 
 
