@@ -234,7 +234,7 @@ Um die Tests auszuführen, wird folgender Befehl in die Kommando Zeile eingegebe
 Die Code der Anwendung wird mittels es-lint  überprüft. Um alle Fehler anzuzeigen, kann die Konsole angewendet werden, um alle Fehler aufzulisten. Jedoch ist dies eher unkomfortable. Ich empfehle daher die Benutzung von einem Vs-Code Extension ESLINT.
 
 ## Zusatzaufgabe
-Die Zusatzfunktion nutzt die API von Slack. Man kann entweder einen Task anhand seiner Id an einen Channel senden oder kann alle seine Tasks an einen Slack Channel senden. 
+Die Zusatzfunktion nutzt die API von Slack. Man kann entweder einen Task anhand seiner Id an einen Channel senden oder kann alle seine Tasks an einen Slack Channel senden. Die Routen, die hier zur Verfügung stehen kann man in dem Unterpunkt **Routen** **Task** einsehen.
 Dies funktioniert über die "Eingehende Webhooks". Diese müssen aktiviert werden für den Channel für den das senden von Tasks gewollt ist. 
 Wenn dies geschehen ist, erhält man für den Channel der ausgewählt wurde eine Webadresse wie diese.
 		
