@@ -109,7 +109,7 @@ export const getLabelById = async (req, res) => {
 
 /**
  * Updatet ein Label anhand seiner Id.
- * Erwartet als Parameter eine taskId.
+ * Erwartet als Parameter eine labelId.
  * Erwartet im Body name.
  * @param {Request}req Request
  * @param {Response}res Response
