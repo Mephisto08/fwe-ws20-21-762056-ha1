@@ -119,8 +119,8 @@ Dies ist das Backend für die erste Hausaufgabe in dem Fach Fortgeschrittene Web
 		- Erwartet als Parameter eine taskId.
 		- Erwartet im Body mindesten einen der zwei Parameter: name, description
 		- 
-				{ "name":  "Task Test 2 Update",
-				  "description":  "Beschreibung Test 2 Update" }
+				{ "name":  "Task Test 1 Update",
+				  "description":  "Beschreibung Test 1 Update" }
 
 
 
@@ -133,7 +133,7 @@ Dies ist das Backend für die erste Hausaufgabe in dem Fach Fortgeschrittene Web
 		- Erwartet als Parameter nichts.
 		- Erwartet im Body einen name.
 		- 
-				{  "name":  "Label Test 4" }
+				{  "name":  "Label Test 1" }
 - *deleteLabelById*
 	- Löscht ein Label. Label wird mit seiner Id selektiert.
 		- **delete** - Request
@@ -173,7 +173,7 @@ Dies ist das Backend für die erste Hausaufgabe in dem Fach Fortgeschrittene Web
 		- Erwartet als Parameter eine labelId.
 		- Erwartet im Body name.
 		- 
-				{ "name":  "Label Test 2 Update" }
+				{ "name":  "Label Test 1 Update" }
 
 ### <ins> Tracking: </ins>
 
@@ -184,8 +184,8 @@ Dies ist das Backend für die erste Hausaufgabe in dem Fach Fortgeschrittene Web
 		- Erwartet als Parameter nichts.
 		- Erwartet im Body eine description und eine taskId von einem existierenden Task.
 		- 
-				{  "description":  "Tracking Test 4",
-				   "task":  "55" }
+				{  "description":  "Tracking Test 1",
+				   "task":  "1" }
 - *deleteTrackingById*
 	- Löscht ein Tracking anhand seiner Id.
 		- **delete** - Request
@@ -217,7 +217,7 @@ Dies ist das Backend für die erste Hausaufgabe in dem Fach Fortgeschrittene Web
 		- Erwartet als Parameter eine trackingId.
 		- Erwartet im Body mindesten einen der drei Parameter: description, timeStart, timeEnd
 		- 
-				{"description":  "Tracking Test 2 Update" }
+				{"description":  "Tracking Test 1 Update" }
 
 ## Datenbank
 Die Daten werden in einer Datenbank gespeichert. Es wird eine mariaDB verwendet. Die Daten, die die Datenbank beinhaltet, können über die Konsole eingesehen werden.
