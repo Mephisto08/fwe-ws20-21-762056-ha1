@@ -39,6 +39,10 @@ async function addLabels(taskId, labelList, res) {
 
     for (let i = 0; i < Object.keys(labelList).length; ++i) {
       const labelId: NewType = labelList[i];
+      const found = await labelRepo.findOne(labelId);
+      if (found === undefined) {
+        continue;
+      }
       const label = await labelRepo.findOneOrFail(labelId);
       taskLabelsList.push(label);
       await taskRepo.save(task);
