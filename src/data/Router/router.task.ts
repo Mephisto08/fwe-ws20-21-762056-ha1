@@ -19,26 +19,16 @@ export const taskRouter = Router({mergeParams: true});
 /**
  * Folgend sind alle Routen aufgeführt, die ein Task hat
  */
-taskRouter.delete('/:taskId', deleteTaskById);
-
-taskRouter.delete('/label/:taskId', deleteLabelsByTaskId);
-
-taskRouter.get('/', getAllTasks);
-
-taskRouter.get('/:taskId', getTaskById);
-
-taskRouter.get('/label/:taskId', getAllLabesByTaskId);
-
-taskRouter.get('/tracking/:taskId', getAllTrackingsByTaskId);
-
-taskRouter.patch('/:taskId', updateTaskById);
-
-taskRouter.post('/', createTask);
-
 taskRouter.post('/label/:taskId', addLabelsByTaskId);
-
-taskRouter.post('/slack/:taskId', sendSlackByTaskId);
-
+taskRouter.post('/', createTask);
+taskRouter.delete('/label/:taskId', deleteLabelsByTaskId);
+taskRouter.delete('/:taskId', deleteTaskById);
+taskRouter.get('/label/:taskId', getAllLabesByTaskId);
+taskRouter.get('/', getAllTasks);
+taskRouter.get('/tracking/:taskId', getAllTrackingsByTaskId);
+taskRouter.get('/:taskId', getTaskById);
 taskRouter.post('/slack', sendSlackAll);
+taskRouter.post('/slack/:taskId', sendSlackByTaskId);
+taskRouter.patch('/:taskId', updateTaskById);
 
 
