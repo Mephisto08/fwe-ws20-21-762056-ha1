@@ -86,7 +86,7 @@ export const getAllTasksByLabelId = async (req, res) => {
 
 /**
  * Gibt einen Label anhand seiner Id zurück.
- * Erwartet als Parameter eine labelid.
+ * Erwartet als Parameter eine labelId.
  * Erwartet im Body nichts.
  * @param {Request}req Request
  * @param {Response}res Response
