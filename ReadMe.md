@@ -7,7 +7,7 @@ Dies ist das Backend für die erste Hausaufgabe.
 
 **Hinweis:** Es wird unter Windows eine Pro-Lizenz benötigt. Da sonst das **FILE-SHARING nicht** aktiviert werden kann.
 	
-- Es muss eine .env - Datei erstellt werden. In dieser kann das Passwort und der Benutzer der Datenbank festgelegt werden, sowie der Namen der Datenbank.
+- Es muss eine .env - Datei erstellt werden. In dieser kann das Passwort, der Benutzername, sowie der Namen der Datenbank festgelegt werden.
 
 **Hinweis:**  Es kann die .env_example zu .env umbenannt werden. Dies reicht aus, damit die Datenbank korrekt starten kann.
 
@@ -207,3 +207,25 @@ Dies ist das Backend für die erste Hausaufgabe.
 		- Erwartet im Body mindesten einen der drei Parameter: description, timeStart, timeEnd
 		- 
 				{"description":  "Tracking Test 2 Update" }
+
+## Test
+Die Anwendung wird durch automatisierte Tests mittels jest getestet.
+Um die Tests auszuführen, wird folgender Befehl in die Kommando Zeile eingegeben:
+			
+			docker-compose exec backend npm run test 
+			
+## Statische Code Analyse
+Die Code der Anwendung wird mittels es-lint  überprüft. Um alle Fehler anzuzeigen, kann die Konsole angewendet werden, um alle Fehler aufzulisten. Jedoch ist dies eher unkomfortable. Ich empfehle daher die Benutzung von einem Vs-Code Extension ESLINT.
+
+## Zusatzaufgabe
+Die Zusatzfunktion nutzt die API von Slack. Man kann entweder einen Task anhand seiner Id an einen Channel senden oder kann alle seine Tasks an einen Slack Channel senden. 
+Dies funktioniert über die "Eingehende Webhooks". Diese müssen aktiviert werden für den Channel für den das senden von Tasks gewollt ist. 
+Wenn dies geschehen ist, erhält man für den Channel der ausgewählt wurde eine Webadresse wie diese.
+		
+		https://hooks.slack.com/services/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
+
+Diese kann man nun in die beiden Routen "*sendSlackAll*"  und "*sendSlackByTaskId*" einfügen. Nun kann man die Route aufrufen und es werden entweder alle oder nur eine Task entsprechend der Route an den eingetragenen Slack Channel gesendet.
+Ich habe einen Test-Slack Channel angelegt. Für diesen funktioniert das aktuelle Projekt. 
+Diesem kann an unter dem folgenden Link beitreten:
+
+				https://join.slack.com/t/fwegruppe/shared_invite/ztjavctzv501mPFoDGYL5v_MrDH3y13A
