@@ -4,8 +4,8 @@ import {Task} from '../Entities/Task';
 import Axios from 'axios';
 /**
  * Fügt ein Task eine Label zu.
- * Erwartet als Parameter eine Task Id.
- * Erwartet im Body eine labelList. Diese beinhaltet eine Liste mit Label Ids.
+ * Erwartet als Parameter eine taskId.
+ * Erwartet im Body eine labelList. Diese beinhaltet eine Liste mit Ids von Labels.
  * @param {Request}req Request
  * @param {Response}res Response
  */
@@ -19,7 +19,7 @@ export const addLabelsByTaskId = async (req, res) =>{
     });
     return;
   };
-  addLabel(taskId, labelList, res);
+  addLabels(taskId, labelList, res);
 };
 
 
@@ -29,7 +29,7 @@ export const addLabelsByTaskId = async (req, res) =>{
  * @param {list}labelList Liste mit Label id
  * @param {Response}res Response
  */
-async function addLabel(taskId, labelList, res) {
+async function addLabels(taskId, labelList, res) {
   type NewType = number;
   const taskRepo = getRepository(Task);
   try {
@@ -83,9 +83,9 @@ export const createTask = async (req, res) => {
 };
 
 /**
- * Löscht aus einem Task labels heraus. Task wird mit seiner Id selektiert.
+ * Löscht aus einem Task Labels heraus. Task wird mit seiner Id selektiert.
  * Erwartet als Parameter eine taskId.
- * Erwartet im Body eine labelList. Diese beinhaltet eine Liste mit Label Ids.
+ * Erwartet im Body eine labelList. Diese beinhaltet eine Liste mit Ids von Labels.
  * @param {Request}req Request
  * @param {Response}res Response
  */
@@ -138,7 +138,7 @@ function deletsLabelsFromLabelList(taskLabelsList: Label[], labelList: any) {
 /**
  * Prüft, ob alle Parameter gesetzt werden für deleteLabelsByTaskId
  * @param {any}taskId Id von einer Task
- * @param {any}labelList Liste mit Id von Label
+ * @param {any}labelList Liste mit Ids von Labels.
  * @return {boolean} True, wenn alle Parameter gesetzt wurden
  */
 function checkIfAllParamsSet(taskId: any, labelList: any) {
