@@ -39,7 +39,7 @@ describe('Tests for the Task class', () => {
   it('addLabelsByTaskId Test wrong infos', async (done) => {
     await helper.resetDatabase();
     await helper.loadFixtures();
-    const taskId = 55;
+    const taskId = 1;
 
     request(helper.app)
         .post(`/api/task/label/${taskId}`)
@@ -49,6 +49,27 @@ describe('Tests for the Task class', () => {
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .expect(404)
+        .end(async (err, res) => {
+          if (err) throw err;
+          done();
+        });
+  });
+  /**
+  * Es wird eine Label Id mitgeschickt, welche nicht existiert
+  */
+  it('addLabelsByTaskId Test wrong infos', async (done) => {
+    await helper.resetDatabase();
+    await helper.loadFixtures();
+    const taskId = 55;
+
+    request(helper.app)
+        .post(`/api/task/label/${taskId}`)
+        .send({
+          labelList: [1, 20],
+        })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
         .end(async (err, res) => {
           if (err) throw err;
           done();
