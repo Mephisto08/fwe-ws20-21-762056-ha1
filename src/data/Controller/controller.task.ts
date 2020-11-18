@@ -5,7 +5,8 @@ import Axios from 'axios';
 /**
  * Fügt ein Task eine Label zu.
  * Erwartet als Parameter eine taskId.
- * Erwartet im Body eine labelList. Diese beinhaltet eine Liste mit Ids von Labels.
+ * Erwartet im Body eine labelList.
+ * Diese beinhaltet eine Liste mit Ids von Labels.
  * @param {Request}req Request
  * @param {Response}res Response
  */
@@ -89,7 +90,8 @@ export const createTask = async (req, res) => {
 /**
  * Löscht aus einem Task Labels heraus. Task wird mit seiner Id selektiert.
  * Erwartet als Parameter eine taskId.
- * Erwartet im Body eine labelList. Diese beinhaltet eine Liste mit Ids von Labels.
+ * Erwartet im Body eine labelList.
+ * Diese beinhaltet eine Liste mit Ids von Labels.
  * @param {Request}req Request
  * @param {Response}res Response
  */
