@@ -6,7 +6,7 @@ Dies ist das Backend für die erste Hausaufgabe in dem Fach Fortgeschrittene Web
 	Es gibt Routen für [Task](#task), [Label](#label), [Tracking](#tracking).
 - Um Beispieldaten zu generieren kann das Kapitel **[Beispieldaten generieren](#beispieldaten-generieren)** eingesehen werden.
 - In dem Unterpunkt **[Datenbank](#datenbank)**, wird beschrieben, wie man in die Datenbankanwendung gelangen kann und Datensätze abfragen kann.
-- Der Unterpunkt **[Test](#test)**, beschreibt, wie man die Test ausführen kann.
+- Der Unterpunkt **[Test](#test)**, beschreibt, wie man die Tests ausführen kann.
 - Mit welchen Mitteln der Code analysiert wird, kann man in dem Unterpunkt **[Statische Code Analyse](#statische-code-analyse)** nachvollziehen.
 - Im letzten Unterpunkt **[Zusatzaufgabe](#zusatzaufgabe)**, ist der Aufbau und die Funktionalität der Zusatzaufgabe beschrieben.
 
