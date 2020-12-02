@@ -233,7 +233,8 @@ Die Daten werden in einer Datenbank gespeichert. Es wird eine mariaDB verwendet.
 
 			docker-compose exec mariadb mysql -uexampleuser -pexamplepwd exampledb
 			
-Der Nutzername, das Passwort und der Namen der Datenbank sind an die .env.example angelehnt. Will man andere Zugangsdaten, muss der Befehl an diese angepasst werden.
+Der Nutzername, das Passwort und der Namen der Datenbank sind an die .env.example angepasst. Sind andere Zugangsdaten in der .env Datei festgelegt worden, muss der Befehl an diese angepasst werden.
+
 
 ## Test
 Die Anwendung wird durch automatisierte Tests mittels jest getestet.
