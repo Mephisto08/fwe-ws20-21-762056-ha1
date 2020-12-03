@@ -2,6 +2,7 @@ import {getRepository} from 'typeorm';
 import {Label} from '../Entities/Label';
 import {Task} from '../Entities/Task';
 import Axios from 'axios';
+
 /**
  * Fügt ein Task eine Label zu.
  * Erwartet als Parameter eine taskId.
@@ -34,8 +35,9 @@ async function addLabels(taskId, labelList, res) {
   type NewType = number;
   const taskRepo = getRepository(Task);
   try {
-    const task = await taskRepo.findOneOrFail(taskId);
-    const taskLabelsList = await task.labels;
+    const task =
+    await taskRepo.findOneOrFail(taskId, {relations: ['labels']});
+    const taskLabelsList = task.labels;
     const labelRepo = getRepository(Label);
 
     for (let i = 0; i < Object.keys(labelList).length; ++i) {
@@ -108,12 +110,17 @@ export const deleteLabelsByTaskId = async (req, res) =>{
 
   try {
     const taskRepo = getRepository(Task);
-    const task = await taskRepo.findOneOrFail(taskId);
-    let taskLabelsList = await task.labels;
+    const task = await taskRepo.findOneOrFail(taskId, {relations: ['labels']});
+    const taskLabelsList = task.labels;
 
-    taskLabelsList = deletsLabelsFromLabelList(taskLabelsList, labelList);
-
-    task.labels = Promise.resolve(taskLabelsList);
+    for (let i = 0; i < Object.keys(labelList).length; ++i) {
+      for (let j = 0; j < taskLabelsList.length; ++j) {
+        if (labelList[i] == taskLabelsList[j].id) {
+          taskLabelsList.splice(j, 1);
+        }
+      }
+    }
+    task.labels = taskLabelsList;
 
     await taskRepo.save(task);
     res.status(200).send({
@@ -125,21 +132,6 @@ export const deleteLabelsByTaskId = async (req, res) =>{
     });
   }
 };
-
-/**
- * Filtert alle Labels aus der taskLabelList heraus,
- * die in der labelList angegeben sind
- * @param {label[]}taskLabelsList Liste mit Labels eines bestimmten Tasks
- * @param {any}labelList Liste mit Label-Id,
- * die aus der oberen Liste gelöscht werden
- * @return {label[]} Liste mit Labels.
- * Beinhaltet nur noch die Labels die gelöscht werden sollten.
- */
-function deletsLabelsFromLabelList(taskLabelsList: Label[], labelList: any) {
-  taskLabelsList = taskLabelsList.filter((label) =>
-    !labelList.includes(label.id));
-  return taskLabelsList;
-}
 
 /**
  * Prüft, ob alle Parameter gesetzt werden für deleteLabelsByTaskId
@@ -185,8 +177,8 @@ export const getAllLabesByTaskId = async (req, res) => {
   const taskId = req.params.taskId;
   const taskRepo = getRepository(Task);
   try {
-    const task = await taskRepo.findOneOrFail(taskId);
-    const taskLabelsList = await task.labels;
+    const task = await taskRepo.findOneOrFail(taskId, {relations: ['labels']});
+    const taskLabelsList = task.labels;
     res.status(200).send({data: taskLabelsList});
   } catch (error) {
     res.status(404).send({
@@ -220,7 +212,8 @@ export const getAllTrackingsByTaskId = async (req, res) =>{
   const taskId = req.params.taskId;
   const taskRepo = getRepository(Task);
   try {
-    const task = await taskRepo.findOneOrFail(taskId);
+    const task = await taskRepo.findOneOrFail(taskId, {
+      relations: ['trackings']});
     const taskTrackingsList = await task.trackings;
     res.status(200).send({data: taskTrackingsList});
   } catch (error) {
