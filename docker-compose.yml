@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   mariadb:
+      container_name: database_mariaDB
       image: mariadb:latest
       volumes:
         - data:/var/lib/mysql
@@ -11,6 +12,7 @@ services:
   backend:
       ##restart: always
       image: node:14.15.0
+      container_name: backend_only
       working_dir: /usr/app/src
       volumes:
         - ./src:/usr/app/src
