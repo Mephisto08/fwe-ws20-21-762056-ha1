@@ -268,7 +268,7 @@ Diese kann man nun in die beiden Routen "*sendSlackAll*"  und "*sendSlackByTaskI
 Ich habe einen Test-Slack Workspace angelegt. Für diesen funktioniert das aktuelle Projekt. 
 Diesem kann an unter dem folgenden Link beitreten:
 
- https://join.slack.com/t/fwegruppe/shared_invite/ztjavctzv501mPFoDGYL5v_MrDH3y13A
+ https://join.slack.com/t/fwegruppe/shared_invite/zt-javctzv5-01mPFoDGYL5v_MrDH3y13A
 
  - In den Channel *taskall* werden alle Task gesendet. Hierfür wird die Route *sendSlackAll* verwendet.
  - In den Channel *taskbyid* wird immer nur eine Task gesendet, die mittels ihrer Id ausgewält wurde. Hierfür wird die Route *sendSlackByTaskId* verwendet.
